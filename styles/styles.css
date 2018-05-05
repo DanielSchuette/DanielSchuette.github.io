@@ -1,3 +1,5 @@
+/* General Styles; apply to all htmls */
+
 body {
   background-color: #E0A87B;
   margin: 0px;
@@ -74,4 +76,20 @@ a:visited {
   list-style-type: none;
   display: inline-block;
   padding-right: 60px;
+}
+
+/* Publications Tab Styles */
+.publications_list li {
+  list-style-type: none;
+  display: inline-block;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+.author_list {
+  font-size: 14px;
+}
+
+.journal {
+  font-size: 16px;
 }
