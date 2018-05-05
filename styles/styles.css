@@ -3,7 +3,7 @@ body {
   margin: 0px;
   padding: 0px;
   font-family: 'Oswald', sans-serif;
-  font-size: 18px;
+  font-size: 22px;
 }
 
 header {
@@ -43,7 +43,7 @@ main {
 }
 
 footer {
-  font-size: 12px;
+  font-size: 16px;
 }
 
 h1 {
