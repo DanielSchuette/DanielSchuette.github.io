@@ -86,7 +86,6 @@ hr {
 /* Publications Tab Styles */
 .publications_list li {
   list-style-type: none;
-  display: inline-block;
   padding-top: 20px;
   padding-bottom: 10px;
 }
