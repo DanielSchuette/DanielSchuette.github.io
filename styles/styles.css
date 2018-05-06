@@ -78,6 +78,11 @@ a:visited {
   padding-right: 60px;
 }
 
+hr {
+  border-top: 4px solid black;
+  border-bottom: none;
+}
+
 /* Publications Tab Styles */
 .publications_list li {
   list-style-type: none;
