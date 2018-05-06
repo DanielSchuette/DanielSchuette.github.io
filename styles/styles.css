@@ -9,9 +9,14 @@ body {
 }
 
 header {
+  overflow: scroll;
+  height: 120px;
   margin: 0px;
   padding: 0px;
   font-size: 22px;
+  position: fixed;
+  top: 0px;
+  width: 100%;
 }
 
 header .header_banner {
@@ -47,6 +52,7 @@ header .header_banner {
 main {
   margin: 10px;
   padding: 10px;
+  margin-top: 90px;
 }
 
 footer {
