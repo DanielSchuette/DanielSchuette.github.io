@@ -9,7 +9,10 @@
     <title>Daniel Schuette @ GitHub - Publications</title>
     <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
     <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    <!-- CSS -->
     <link href="../styles/styles.css" rel="stylesheet" type="text/css">
+    <!-- JavaScript -->
+    <script src="../scripts/dropdown.js" type="text/javascript"></script>
   </head>
   <body>
     <header id="top_of_page">
@@ -17,7 +20,19 @@
         <ul>
           <li><a href="../index.html">Home</a></li>
           <li class="header_selected"><a href="../publications/publications.html">Publications</a></li>
-          <li><a href="../projects/projects.html">Projects</a></li>
+          <li>
+            <div class="dropdown">
+              <button onclick="openDropdown()" class = "dropbtn">
+                Projects
+              </button>
+              <div id="Header_dropdown" class="dropdown_menu">
+                <ul class="dropdown_items">
+                  <a href="../projects/projects.html">Go to Projects Overview</a>
+                  <a href="../projects/projects.html">Calcium Imaging Analyzer</a>
+                </ul>
+              </div>
+            </div>
+          </li>
           <li><a href="../blog/blog.html">Blog</a></li>
           <li><a href="../links/links.html">Links</a></li>
         </ul>
