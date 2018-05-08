@@ -19,4 +19,4 @@ window.onclick = function(event) {
 }
 
 /* Debugging */
-console.log("The script gets called from index.html")
+console.log("Successfully called script from index.html")
