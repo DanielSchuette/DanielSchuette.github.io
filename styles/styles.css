@@ -53,13 +53,19 @@ header .header_banner {
   font-size: 32px;
 }
 
+/* Code Snippets Styles */
+.code_snippet {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 24;
+}
+
 /* This header contains multiple links! */
 .header_selected_dropdown .dropbtn {
   font-size: 32px;
 }
 
 .header_selected_dropdown .dropdown_menu {
-  fontsize: 22px;
+  font-size: 22px;
 }
 
 main {
@@ -142,6 +148,10 @@ hr {
 }
 
 /* Publications Tab Styles */
+.list_heading {
+  text-align: center;
+}
+
 .publications_list li {
   list-style-type: none;
   padding-top: 20px;
