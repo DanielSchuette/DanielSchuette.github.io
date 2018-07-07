@@ -11,6 +11,11 @@ body,
   z-index: 2;
 }
 
+p {
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 18px;
+}
+
 header {
   overflow: scroll;
   height: 120px;
