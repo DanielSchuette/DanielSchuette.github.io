@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Daniel Schuette @ GitHub. Learn about current projects and more!">
+    <meta name="keywords" content="Medicine, Data Science, Coding, R, Python, Vim">
+    <meta name="author" content="Daniel Schuette">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daniel Schuette @ GitHub - Vim Basics, Fast and Easy</title>
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    
+    <!-- CSS -->
+    <link href="../styles/styles.css" rel="stylesheet" type="text/css">
+    <link href="../styles/links_blog.css" rel="stylesheet" type="text/css">
+    
+    <!-- JavaScript -->
+    <script src="../scripts/dropdown.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <header>
+      <div class="header_banner">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../publications/publications.html">Publications</a></li>
+          <li>
+            <div class="dropdown">
+              <button onclick="openDropdown()" class = "dropbtn">
+                Projects
+              </button>
+              <div id="Header_dropdown" class="dropdown_menu">
+                <ul class="dropdown_items">
+                  <a href="../projects/projects.html">Go to Projects Overview</a>
+                  <a href="../projects/projects.html">Calcium Imaging Analyzer</a>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="header_selected"><a href="../blog/blog.html">Blog</a></li>
+          <li><a href="../links/links.html">Links</a></li>
+        </ul>
+      </div>
+    </header>
+    <main id="top_of_page">
+        <div class="tutorial_heading">
+          <h1 class="content_heading">Vim Basics -<br>Learn the Most Important Vim Commands in Just a Few Minutes</h1>
+          <h4 class="tutorial_introduction">
+              <p>             
+                  Vim is one of the most popular text editors for professionals and hobbyists who write code (according to two 
+                  <a href="STACKOVERFLOW">Stack Overflow surveys</a>) 
+                  and thanks to the fact that Vim can easily be modify and extended, it is not just a simple editor with a command line interface 
+                  but a 
+                  fully-featured development environment that provides syntax highlighting, auto-completion, a directory tree and many more features.
+              </p> 
+              <p>
+                  This sounds great and software (or web) developers who use editors like Sublime or Atom will certainly appreciate the multitude of 
+                  available plugins. However, the 'Vim Language' itself is extremely powerful. That said, it is certainly not easy for beginners or 
+                  people who want to transition from one of the above mentioned editors to Vim, to get used to 'The Vim Way' of doing things.
+              </p>
+              <p>
+                  I wrote this post to summarize all the commands in Vim that I use on a daily basis and the resources I found (and find) most useful
+                  when learning Vim (and this learning process does probably never end). Hopefully, putting all these things in one place will provide
+                  a starting place for one or two people who want to get started with Vim but were overwhelmed in the past by all the new things one 
+                  needs to learn before being productive with Vim. 
+              </p>
+          </h4>
+        </div>
+        <div class="content_body">
+            <p>The first version of Vim dates back to the year 1991 when v1.14 was publically released. Vim is actually an acronym and stands for Vi IMproved. Vims predecessor Vi was developed as a text editor program for Unix and originally released in 1978. Thus, the source code for Vi/Vim is around for more than 4 decades. Vim was constantly extended since the earliest days and nowadays it comes with an entire universe of plugins.</p>
+            <p>Vim as a text editor is based on the idea that you will usually spend more time editing and changing text/code than writing it from scratch. Many of the commands in Vim are optimized with this 'philosophy' in mind. To make modifying text as fast, flexible and intuitive as possible, Vim provides its user with a complete language; meaning, Vim has <span class="code_snippet">nouns</span>, <span class="code_snippet">verbs</span>, and <span class="code_snippet">adverbs</span> as most languages.</p>
+            <br>
+            <h4>Nouns / Text Objects</h4>   
+            <p>Text objects can be interpreted as Vim's <span class="code_snippet">nouns</span>. Text objects are single words (keyword <span class="code_snippet">w</span>), sentences (keyword <span class="code_snippet">s</span>), whole paragraphs (keyword <span class="code_snippet">p</span>), tags (keyword <span class="code_snippet">t</span>), and many more. The can be used to specify which part of your text/document you want to modify - or they can be used as <span class="code_snippet">motions</span>. That means that typing for example <span class="code_snippet">w</span> in normal mode (<a href="#modes_in_vim_paragraph">see below</a>) lets you jump to the next word. In a similar way, combining <span class="code_snippet">w</span> with an number lets you jump the indicated number of words.</p>
+            <br>
+            <h4>Verbs / Actions</h4>
+            <p><span class="code_snippet">Actions</span> on text (like deleting or copying) can be interpreted as Vim's verbs. Most of these verbs are relatively intuitive, for example deleting is done with keyword <span class="code_snippet">d</span> and changing text with keyword <span class="code_snippet">c</span>. You can already see that the combination of <span class="code_snippet">nouns</span> and <span class="code_snippet">verbs</span> (e.g. <span class="code_snippet">dw</span> for deleting a word) can be extremely powerful. Other actions allow you to save your file (<span class="code_snippet">w</span> for write) and quite (keyword <span class="code_snippet">q</span>).</p>
+            <br>
+            <h4>Adverbs / Modifiers</h4>
+            <p>Adverbs can be used to fine-tune verbs (again, pretty similar to natural languages). If you wanted to delete text inside parentheses, you could use the adverb <span class="code_snippet">i</span> and searching/finding is done with with the keyword <span class="code_snippet">f</span>. You will usually be able to combine an <span class="code_snippet">adverb</span>, <span class="code_snippet">verb</span>, and <span class="code_snippet">noun</span> to perform a desired operation on your file with just 3 key strokes. That makes working with Vim very fast (as soon as you know a basic set of keywords).</p>
+        <br>
+        </div>
+        <div id="modes_in_vim_paragraph">
+            <h3>Modes in Vim</h3>
+            <p>All these keywords in Vim make it impossible to have just one <span class="code_snippet">mode</span> of working with your file. There must be at least one writing <span class="code_snippet">mode</span> (called <span class="code_snippet">insert mode</span>) and one mode to move around the file (called <span class="code_snippet">normal mode</span> according to Vim's philosphy). In fact, Vim has more than half a dozen different <span class="code_snippet">modes</span>. But to get comfortable working with Vim and be productive, you might want to focus on the 3 most important <span class="code_snippet">modes</span> first. In addition to the two modes outlined above, you might want to highlight parts of your text from time to time. That can be done in <span class="code_snippet">visual mode</span>.</p>
+            <p>The table below summarizes the most important <span class="code_snippet">nouns</span>, <span class="code_snippet">verbs</span>, and <span class="code_snippet">adverbs</span> that you will use on a daily basis. Most of them are used in <span class="code_snippet">normal mode</span>, but certain other keywords allow you to switch from <span class="code_snippet">normal mode</span> to <span class="code_snippet">insert mode</span> or <span class="code_snippet">visual mode</span>. You can either start to move around one of your documents in <span class="code_snippet">normal mode</span> using Vim's <span class="code_snippet">motions</span> and modify it using basic <span class="code_snippet">actions</span> --  or you can type $<span class="code_snippet">vimtutor</span> at a command line prompt to get a guided tutorial. That should not be necessary, though (and takes some time...).</p>
+        </div>
+        <div id="vim_commands_table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Vim Commands</td>
+                        <th>Explanation</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="table_sub_heading">Basic <span class="code_snippet">Motions</span></td>
+                        <td class="table_sub_heading"></td>
+                    </tr>
+                    <tr>
+                        <td><span class="code_snippet">Type something</span></td>
+                        <td>This does something with your text</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+      <br>
+      <hr>
+    <footer>
+      <h1>Visit my social media!</h1>
+        <div class="social_media">
+            <ul>
+              <li>
+                <a href="https://www.facebook.com/" target="_blank">
+                  <img src="../images/facebook_logo.svg" alt="Facebook" height="55" width="55" align="top">
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/" target="_blank">
+                  <img src="../images/twitter_logo.svg" alt="Twitter" height="70" width="70" align="top">
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/DanielSchuette" target="_blank">
+                  <img src="../images/github_logo.svg" alt="Github" height="45" width="45" align="top">
+                </a>
+              </li>
+              <li>
+                <a href="https://www.researchgate.net/profile/Daniel_Schuette" target="_blank">
+                  <img src="../images/researchgate_logo.svg" alt="Researchgate" height="60" width="60" align="top">
+                </a>
+              </li>
+              <li>
+                <a href="https://www.linkedin.com/in/daniel-schuette/" target="_blank">
+                  <img src="../images/linkedin_logo_small.svg" alt="Linkedin" height="50" width="50" align="top">
+                </a>
+              </li>
+            </ul>
+
+          </div>
+          <p> <a href="#top_of_page"> <strong>Back to top</strong> </a> </p>
+    </footer>
+  </body>
+</html>
