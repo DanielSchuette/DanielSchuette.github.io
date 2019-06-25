@@ -48,3 +48,6 @@ header_pages:
   - links.md
 
 footer: 'follow me on <a href="https://github.com/DanielSchuette">github</a>'
+
+# github pages
+gem "github-pages", group: :jekyll_plugins
