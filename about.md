@@ -1,18 +1,7 @@
 ---
 layout: page
-title: About
+title: '/about'
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
-
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
-
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
-
-
-[jekyll-organization]: https://github.com/jekyll
+On this website, I will post about topics related to computer science that either interest me or that I want to put into words to get a better understanding of them. Most things will probably be **Unix**- and **Systems Programming**-related, maybe some **algorithms**, **compilers** or anything else I read about or code. Just go to my [GitHub](https://github.com/DanielSchuette) if you want to learn more about my projects or contribute to one of them. Questions or feedback via email or twitter are always welcome, too!
