@@ -24,7 +24,6 @@ github_username:  DanielSchuette
 
 # Build settings
 markdown: kramdown
-#theme: jekyll-theme-console # minima
 remote_theme: b2a3e8/jekyll-theme-console
 
 plugins:
@@ -32,16 +31,7 @@ plugins:
   - jekyll-seo-tag
 
 # Exclude from processing.
-# The following items will not be processed, by default. Create a custom list
-# to override the default setting.
-# exclude:
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
+# Create a custom list to override the default setting.
 
 # configs used by `jekyll-theme-console'
 header_pages:
