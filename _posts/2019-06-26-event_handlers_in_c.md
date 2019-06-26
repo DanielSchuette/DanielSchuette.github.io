@@ -6,7 +6,7 @@ categories: c
 ---
 
 # Event Handlers in C
-While reading some source code, I came across a neat way to do error handling in a fairly generic way in **C**. I will explain the idea along with a minimal, working example in this post. You can refer to [this gist](https://gist.github.com/DanielSchuette/fc0fe0214c55668743b71a5317b1e7f2) or go to the end of this page for a full source code listing.
+While reading some source code, I came across a neat way to do event handling in a fairly generic way in **C**. I will explain the idea along with a minimal, working example in this post. You can refer to [this gist](https://gist.github.com/DanielSchuette/fc0fe0214c55668743b71a5317b1e7f2) or go to the end of this page for a full source code listing.
 
 ## The Event Handler Table
 Imaging you are hacking on some library that provides graphics utilities to GUI programmers (the code I read was some X11-based window manipulation program, so this is the first thing I could think of). Obviously, you will need to update a window that you draw on the screen based on a user's actions like resizing, button presses, and so on. To make this as simple and extensible as possible, a table of function pointers is set up. Functions take a generic **void \*** argument and a number of preprocessor variables can be used to index into the table (**enums** are great for this, too). At this point, it's demonstrated that not every event that the application backend recognizes, needs to have a callback handler. In this example application, only window resizing, button presses, and killing a window is handled. The backend actually sends two more events, though (pausing the application and spawning a new window). Obviously, all this is just toy code, but in my opinion, this is a nice code pattern for sending messages between library code and the code of a library's user. Here's the code described above:
@@ -21,7 +21,7 @@ Imaging you are hacking on some library that provides graphics utilities to GUI 
 #define EV_KILL         4   /* a window is killed */
 #define NUM_HANDLERS    5   /* the total number of events */
 
-/* error handlers */
+/* event handlers */
 static int resize(void *);
 static int button_click(void *);
 static int kill(void *);
@@ -29,7 +29,7 @@ static int handle_event(unsigned int, void *);
 
 static void redraw(void);
 
-/* error handler table, not every event is handled */
+/* event handler table, not every event is handled */
 static int (*handlers[NUM_HANDLERS])(void *) = {
     [EV_RESIZ] = resize,
     [EV_BTNCLICK] = button_click,
