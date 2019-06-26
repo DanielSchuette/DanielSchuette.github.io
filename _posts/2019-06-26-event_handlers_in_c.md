@@ -16,7 +16,7 @@ Imaging you are hacking on some library that provides graphics utilities to GUI 
 
 #define EV_SPAWN        0   /* a new window is spawned */
 #define EV_RESIZ        1   /* an existing window is resized */
-#define EV_BTNCLICK     2   /* a button is clicked */
+#define EV_BTNPRESS     2   /* a button is pressed */
 #define EV_PAUSE        3   /* some stream is paused */
 #define EV_KILL         4   /* a window is killed */
 #define NUM_HANDLERS    5   /* the total number of events */
@@ -25,15 +25,14 @@ Imaging you are hacking on some library that provides graphics utilities to GUI 
 static int resize(void *);
 static int button_click(void *);
 static int kill(void *);
-static int handle_event(unsigned int, void *);
 
-static void redraw(void);
+static int handle_event(unsigned int, void *);
 
 /* event handler table, not every event is handled */
 static int (*handlers[NUM_HANDLERS])(void *) = {
-    [EV_RESIZ] = resize,
-    [EV_BTNCLICK] = button_click,
-    [EV_KILL] = kill,
+    [EV_RESIZ]    = resize,
+    [EV_BTNPRESS] = button_click,
+    [EV_KILL]     = kill,
 };
 ```
 Many additional abstractions come to mind, e.g. calling a library function to initialize the **NULL** pointers in the table with default actions. But we'll keep this example as minimal as possible.
@@ -44,8 +43,10 @@ Many additional abstractions come to mind, e.g. calling a library function to in
 ```c
 typedef struct {
     int len;
-    int evs[2];
+    int evs[3];
 } event_queue;
+
+static void redraw(event_queue *);
 ```
 
 With this code, handling an event is now just selecting an event handler from the table (if it exists) and calling it with the arguments that the user provided. Obviously, a convention is needed that specifies which actual type this argument has behind the **void \***. If you don't like the way it's done in this example, you can just go another route you like better. Anyways, the callback function is responsible for returning an appropriate error code. If a nonexistent handler is requested by the caller of **handle_event()**, a generic **-1** is returned:
@@ -68,7 +69,8 @@ Now to the main loop. An example **event_queue** is created which would usually 
 int main(void)
 {
     int i, ev, len, dims[] = { 300, 400 };
-    event_queue ev_queue = { .len = 2, .evs = { 1, 4 } };
+    char key = 'c';
+    event_queue ev_queue = { .len = 3, .evs = { 1, 2, 4 } };
 
     for (;;) {
         /* poll the event queue */
@@ -77,9 +79,9 @@ int main(void)
             /* call event handlers (their return status is currently ignored) */
             if (ev == EV_RESIZ) handle_event(ev, (void *)dims);
             if (ev == EV_KILL) handle_event(ev, "some kind of application");
-            /* FIXME: handle other events and reset the queue */
+            if (ev == EV_BTNPRESS) handle_event(ev, (void *)(&key));
         }
-        redraw(&ev_queue);      /* redraw enqueues new events to handle */
+        redraw(&ev_queue);      /* redraw enqueues new events */
         break;                  /* any actual application would keep running */
     }
 
