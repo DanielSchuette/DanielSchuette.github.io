@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Event Handlers in C"
-date:   2019-06-25 16:04:00 +0200
+date:   2019-06-26 22:18:00 +0200
 categories: c
 ---
 
