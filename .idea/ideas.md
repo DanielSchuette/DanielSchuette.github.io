@@ -7,3 +7,4 @@
 - unions in C
 - ring buffer
 - kill (http://www.csl.mtu.edu/cs4411.ck/www/NOTES/signal/kill.html)
+- gcc compiler extensions
