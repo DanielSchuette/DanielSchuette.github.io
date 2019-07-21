@@ -90,7 +90,7 @@ int main(void)
 ```
 This is not the most difficult code pattern in the world and everything is done in plain, old **C** without fancy algorithms or data structures. I still hope you learned something and maybe you will even be able to use a similar strategy in one of your own projects. As usual, feedback and bug reports are highly welcome!
 
-## The full example:
+## The Full Example:
 <style>
 /* make gist look nicer, this really only works when put in manually,
  * probably because of remote theme...
