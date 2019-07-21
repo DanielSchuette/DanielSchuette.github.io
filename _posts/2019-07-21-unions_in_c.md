@@ -6,7 +6,7 @@ categories: c
 ---
 
 # The Union Type in C
-The **union** data type is probably the least often used type in the C language overall -- as far as I can tell from source code I read and code I wrote myself[^1]. One reason for this might be a lack of use cases and that's why I'm writing this post. While doing some [SDL2](https://wiki.libsdl.org/SDL_Event?highlight=%28%5CbCategoryStruct%5Cb%29%7C%28CategoryEvents%29) development, I realized that they implement event handling really elegantly using **union**s. After reading some key parts of the event handler sources ([SDL_events.h](https://github.com/DanielSchuette/SDL-mirror/blob/master/include/SDL_events.h)), I came up with a simplified event queue example that uses **unions** in a similar way.
+The **union** data type is probably the least often used type in the C language overall -- as far as I can tell from source code I read and code I wrote myself[^1]. One reason for this might be a lack of use cases and that's why I'm writing this post. While doing some [SDL2](https://wiki.libsdl.org/SDL_Event?highlight=%28%5CbCategoryStruct%5Cb%29%7C%28CategoryEvents%29) development, I realized that they implement event handling really elegantly using **union**s. After reading some key parts of the event handler sources ([SDL_events.h](https://github.com/DanielSchuette/SDL-mirror/blob/master/include/SDL_events.h)), I came up with a simplified event queue example that uses **unions** in a similar way. As always, refer to [this gist](https://gist.github.com/DanielSchuette/eda98376a3b6f750d649d0eb23b16602) or the end of the post if you want to see a full source code listing.
 
 ## Setting Up
 ```c
