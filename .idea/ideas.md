@@ -1,6 +1,7 @@
 # Post Ideas
 - [x] unions in C
 
+- strings.c explanation (copying of structs, too?)
 - finish shell
 - compiler writing
 - bootloader
