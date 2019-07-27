@@ -8,6 +8,7 @@ baseurl: ""
 url: "https://danielschuette.github.io/"
 twitter_username: DogtorDash
 github_username:  DanielSchuette
+linkedin_username: daniel-schuette
 google_analytics: "UA-118902218-1"
 show_excerpts: false
 
@@ -19,10 +20,6 @@ theme: minima
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
-
-minima:
-  social_links:
-    linkedin: daniel-schuette
 
 disqus:
   shortname: https-danielschuette-github-io
