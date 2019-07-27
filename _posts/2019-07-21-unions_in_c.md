@@ -5,10 +5,9 @@ date:   2019-07-21 18:05:00 +0200
 categories: c
 ---
 
-# The Union Type in C
 The `union` data type is probably the least often used type in the C language overall -- as far as I can tell from source code I read and code I wrote myself[^1]. One reason for this might be a lack of use cases and that's why I'm writing this post. While doing some [SDL2](https://wiki.libsdl.org/SDL_Event?highlight=%28%5CbCategoryStruct%5Cb%29%7C%28CategoryEvents%29) development, I realized that they implement event handling really elegantly using `union`s. After reading some key parts of the event handler sources ([SDL_events.h](https://github.com/DanielSchuette/SDL-mirror/blob/master/include/SDL_events.h)), I came up with a simplified event queue example that uses `unions` in a similar way. As always, refer to [this gist](https://gist.github.com/DanielSchuette/eda98376a3b6f750d649d0eb23b16602) or the end of the post if you want to see a full source code listing.
 
-## Setting Up
+# Setting Up
 ```c
 /* unions.c: demonstrates the use of unions. */
 #include <stdbool.h>
@@ -52,7 +51,7 @@ typedef struct {
 Notice the first member of every `struct`. Because a `union` can only hold one of (potentially multiple) different data types -- but always with the same memory layout -- we will be able to reuse the `unsigned int type` if we arrange the members in the `union event` correctly. If we didn't do that, writing to e.g. a `struct mouse_event` in the `union` would lead to unpredictable values for every other `union` member (if that's not clear, quickly go back to your K&R and read the section about `union`s again!).
 
 
-## The Union
+# The Union
 Then, how does this `union` look like?
 
 ```c
@@ -67,7 +66,7 @@ typedef union {
 
 Hopefully, the previous explanation actually makes sense now. In the `union event`, the first member is the `unsigned int type` that was also defined in every event `struct`. Thus, if e.g. a `union event` member `mouse_event` is created, its memory layout will be such that accessing the `union`s `unsigned int type` will actually access the memory location that `mouse_event.type` is in, too! This behavior of `union`s lets us not only use memory very effectively; in this example we can also detect the type of event we got from the queue via one member and the actual event-related data from the corresponding other member of `union event`. How neat is that!
 
-## Putting Data on the Queue
+# Putting Data on the Queue
 The following section should be pretty self-explanatory. A global `static event *queue[MAX_EVENTS]` is accessed and modified via a global `static event **queue_ptr`. The functions `void fill_queue(void)` and `bool get_event(event *)` are used for queue manipulation.
 
 ```c
@@ -118,7 +117,7 @@ bool get_event(event *ev)
 
 Obviously, this queue implementation is not very usable in the real world[^3]. I might demonstrate the use of a ring buffer in a future post, though.
 
-## Using the Queue
+# Using the Queue
 The queue is continuously polled in a loop. For every event, a `switch` statement identifies its type and the appropriate actions can be taken. In this case we just print the event-related data to show that everything works as expected.
 
 ```c
@@ -165,10 +164,10 @@ int main(void)
 }
 ```
 
-## Final Thoughts
+# Final Thoughts
 I haven't really used `union`s in my own code so far, so it was really helpful to see this use case and the elegant code it produces. If you like this example of C `union`s and/or have questions/concerns related to the code or any explanations, [please send me your feedback via twitter](https://twitter.com/DogtorDash)!
 
-## The Full Example:
+# The Full Example:
 <script src="https://gist.github.com/DanielSchuette/eda98376a3b6f750d649d0eb23b16602.js"></script>
 
 [^1]: This might be different in embedded and systems programming where memory layout and a small footprint are extremely important. There are many cases in which `union`s can be used e.g. to [access bytes of a multi-byte integer type](https://gist.github.com/DanielSchuette/2a48ba596bbb817ebbe893ba558a25b1).
