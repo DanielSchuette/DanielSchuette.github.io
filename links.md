@@ -2,6 +2,7 @@
 layout: post
 title: 'Links'
 order: 3
+comments: false
 permalink: /links/
 ---
 Click on any of the links below to learn more about me:
