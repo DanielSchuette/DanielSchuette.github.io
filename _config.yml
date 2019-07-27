@@ -8,23 +8,21 @@ baseurl: ""
 url: "https://danielschuette.github.io/"
 twitter_username: DogtorDash
 github_username:  DanielSchuette
+google_analytics: "UA-118902218-2"
+show_excerpts: false
 
 # Build settings
 markdown: kramdown
 theme: minima
-#remote_theme: b2a3e8/jekyll-theme-console
 
 # Plugin settings
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
-# Configs used by `jekyll-theme-console' (if enabled)
-#header_pages:
-#  - index.md
-#  - about.md
-#  - links.md
-#  - shell.md
-#  - compiler.md
-#
-#footer: 'Follow me on <a href="https://github.com/DanielSchuette">GitHub</a>.'
+minima:
+  social_links:
+    linkedin: daniel-schuette
+
+disqus:
+  shortname: https-danielschuette-github-io
