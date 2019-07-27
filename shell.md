@@ -2,6 +2,7 @@
 layout: post
 title: 'Shell'
 order: 5
+comments: false
 permalink: /shell/
 ---
 

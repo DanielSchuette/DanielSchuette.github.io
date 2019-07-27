@@ -14,11 +14,22 @@ layout: default
     line-height: 1;
     letter-spacing: -1px;
   }
+
+  .unselectable {
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+
+    /* No support for these yet, use at own risk */
+    -o-user-select: none;
+    user-select: none;
+}
 </style>
 
 <div class="container">
-  <h1>404</h1>
-
-  <p><strong>Page not found :(</strong></p>
-  <p>The requested page could not be found.</p>
+  <div class="unselectable"><i class="fas fa-poo fa-4x"></i></div>
+  <p><strong>Page not found!</strong></p>
+  <p>
+    The requested page could not be found. Maybe you want to go <a href="{{ site.url}}">back to the home page</a>?
+  </p>
 </div>

@@ -2,6 +2,7 @@
 layout: post
 title: 'Compiler'
 order: 4
+comments: false
 permalink: /compiler/
 ---
 
