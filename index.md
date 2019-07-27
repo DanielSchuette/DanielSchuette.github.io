@@ -1,8 +1,8 @@
 ---
-author: Daniel Schuette
 layout: home
-title: '/home'
-permalink: /
+title: 'Home'
+order: 1
+permalink: /home/
 ---
 
-Go to the [/about]({{ site.url}}/about/) page to read about what this website is meant to be. Click any of the links below to start getting into a topic that interests you. Don't forget to give feedback via [email](mailto:d.schuette@online.de) or [twitter](https://twitter.com/DogtorDash) if you enjoy any of the material you find here. Have fun!
+Go to [about]({{ site.url}}/about/) to get an idea what this website is meant to be. Click any of the links below to read about a topic that interests you. Also, don't forget to give feedback via [email](mailto:d.schuette@online.de) or [twitter](https://twitter.com/DogtorDash) if you like any of the material you find here. Enjoy!

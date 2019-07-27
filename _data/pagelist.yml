@@ -1,0 +1,15 @@
+header_items:
+    - title: Home
+      url: /home/
+
+    - title: About
+      url: /about/
+
+    - title: Links
+      url: /links/
+
+    - title: Shell
+      url: /shell/
+
+    - title: Compiler
+      url: /compiler/

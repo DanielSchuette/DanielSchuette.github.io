@@ -1,14 +1,15 @@
 # Post Ideas
 - [x] unions in C
 
+- struct layout in C (container_of, offsetof)
 - strings.c explanation (copying of structs, too?)
+- ring buffer
 - finish shell
 - compiler writing
 - bootloader
 - paging in OSes
 - scheduler in OSes
-- ring buffer
-- kill (http://www.csl.mtu.edu/cs4411.ck/www/NOTES/signal/kill.html)
+- [kill](http://www.csl.mtu.edu/cs4411.ck/www/NOTES/signal/kill.html)
 - gcc compiler extensions
 - C regex
 - threads in C
@@ -16,3 +17,4 @@
 - hashing
 - sha256 checksum
 - sorting algorithms
+- [autotools workflow](https://thoughtbot.com/blog/the-magic-behind-configure-make-make-install)

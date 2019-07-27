@@ -1,7 +1,7 @@
 ---
-author: Daniel Schuette
 layout: post
-title: '/shell'
+title: 'Shell'
+order: 5
 permalink: /shell/
 ---
 
@@ -10,5 +10,4 @@ The following series of posts describes the process of writing a shell (a comman
 <br>
 
 - Part 1: [Shell basics]({{ site.url }}/shell/part_01)
-- Part 2: [A minimal, viable shell]({{ site.url }}/shell/part_02)
-- Part 3: Coming soon!
+- Part 2: A minimal shell - Coming soon!

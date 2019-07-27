@@ -1,44 +1,30 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely edit after that. If you find
-# yourself editing this file very often, consider using Jekyll's data files
-# feature for the data you need to update frequently.
-#
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
-
 # Site settings
-# These are used to personalize your new site. If you look in the HTML files,
-# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
-# You can create any custom variable you would like, and they will be accessible
-# in the templates via {{ site.myvariable }}.
-title: Programming the Computer
+title: Programming the Computer 👨‍💻
+name: Programming the Computer
+author: Daniel Schütte
 email: d.schuette@online.de
-description: >- # this means to ignore newlines until "baseurl:"
-  Bits and pieces about computer programming.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://danielschuette.github.io/" # e.g. http://example.com
+description: Bits and pieces about programming.
+baseurl: ""
+url: "https://danielschuette.github.io/"
 twitter_username: DogtorDash
 github_username:  DanielSchuette
 
 # Build settings
 markdown: kramdown
-remote_theme: b2a3e8/jekyll-theme-console
+theme: minima
+#remote_theme: b2a3e8/jekyll-theme-console
 
+# Plugin settings
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
 
-# Exclude from processing.
-# Create a custom list to override the default setting.
-
-# configs used by `jekyll-theme-console'
-header_pages:
-  - index.md
-  - about.md
-  - links.md
-  - shell.md
-  - compiler.md
-
-footer: 'follow me on <a href="https://github.com/DanielSchuette">github</a>'
+# Configs used by `jekyll-theme-console' (if enabled)
+#header_pages:
+#  - index.md
+#  - about.md
+#  - links.md
+#  - shell.md
+#  - compiler.md
+#
+#footer: 'Follow me on <a href="https://github.com/DanielSchuette">GitHub</a>.'

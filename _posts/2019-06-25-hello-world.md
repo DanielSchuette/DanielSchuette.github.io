@@ -4,7 +4,7 @@ title:  "Hello World!"
 date:   2019-06-25 06:55:15 +0200
 categories: updates
 ---
-It's easy to print the string *hello world* onto the screen. All you need is a **C** compiler (which hopefully comes with your system, otherwise something's fundamentally wrong). Save the following to a file named *hello.c*:
+It's easy to print the string *hello world* onto the screen. All you need is a **C** compiler (which hopefully comes with your system, otherwise something's fundamentally wrong). Save the following to a file named `hello.c`:
 
 ```c
 #include <stdio.h>
