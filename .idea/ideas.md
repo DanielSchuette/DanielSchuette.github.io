@@ -1,7 +1,8 @@
 # Post Ideas
 - [x] unions in C
+- [x] struct layout in C (container_of, offsetof)
 
-- struct layout in C (container_of, offsetof)
+- OpenMP
 - strings.c explanation (copying of structs, too?)
 - ring buffer
 - finish shell
