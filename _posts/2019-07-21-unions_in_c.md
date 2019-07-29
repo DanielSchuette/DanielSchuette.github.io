@@ -170,6 +170,8 @@ I haven't really used `union`s in my own code so far, so it was really helpful t
 # The Full Example:
 <script src="https://gist.github.com/DanielSchuette/eda98376a3b6f750d649d0eb23b16602.js"></script>
 
+<hr class="hr-light">
+
 [^1]: This might be different in embedded and systems programming where memory layout and a small footprint are extremely important. There are many cases in which `union`s can be used e.g. to [access bytes of a multi-byte integer type](https://gist.github.com/DanielSchuette/2a48ba596bbb817ebbe893ba558a25b1).
 [^2]: It should be easy to expand the code to enqueue events dynamically, though. Initially, I thought of `getchar()`ing 'events' from the user, but that would have added unnecessary complexity to the example.
 [^3]: Not to speak of error checking, which isn't done at all.

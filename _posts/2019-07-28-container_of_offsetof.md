@@ -29,7 +29,7 @@ int main(void)
 }
 ```
 
-Now, `size_t offset` holds the byte offset of member `float f` within `struct foo`. By default[^2], compilers align structure members to *natural* boundaries, depending on the platform you're working on. This behavior can be changed using `__attribute__((packed))` and we could try do manually calculate the offset of a certain member of `foo`. But because data types can have different sizes, too, this gets difficult and error-prone really quickly if portability is a concern. Thus, `offsetof` should be used. But how does it work?
+After calling `offsteof`, `size_t offset` holds the byte offset of member `float f` within `struct foo`. By default[^2], compilers align structure members to *natural* boundaries, depending on the platform you're working on. This behavior can be changed using `__attribute__((packed))` and we could try do manually calculate the offset of a certain member of `foo` to `foo`'s base address. But because data types can have different sizes, too, this gets difficult and error-prone really quickly, especially if portability is a concern. Thus, `offsetof` should be used. But how does it work internally?
 
 ```c
 #define my_offsetof(type, memb) ({                        \
@@ -40,15 +40,15 @@ First, let me say that if you don't use `gcc`, your compiler might not support [
 
 The following operations are done by `offsetof` to get to the result:
 
-- it creates a `type *` `NULL` pointer (i.e. a `NULL` pointer to the `struct` in question: `((type *)0)`)
+- It creates a `type *` `NULL` pointer (i.e. a `NULL` pointer to the `struct` in question: `((type *)0)`).
 
-- it accesses its member (`((type *)0)->memb`)
+- It accesses its member (`((type *)0)->memb`).
 
-- it takes the address of that member (`&((type *)0)->memb`), which is now `NULL`-pointer-address + `offset`
+- It takes the address of that member (`&((type *)0)->memb`), which is now **`NULL`-pointer-address + offset-of-`memb`**.
 
-- it subtracts the memory address of the `NULL` pointer[^3] (`(char *)&((type *)0)->memb - (char *)0`), yielding just `offset`
+- It subtracts the memory address of the `NULL` pointer[^3] (`(char *)&((type *)0)->memb - (char *)0`), yielding just **offset-of-`memb`**.
 
-- finally, the result is cast into a `size_t`, which should be used when representing memory-related quantities (since it is guaranteed to be able to hold the size of any object and `offset` cannot be larger then the size of `struct foo` for obvious reasons)
+- Finally, it casts this offset into a `size_t`, which should be used when representing memory-related quantities (since it is guaranteed to be able to hold the size of any object and the result of calculating `offset` cannot be larger then the size of `struct foo` since `memb` is *in* `foo`).
 
 All these steps involve constant expression, so the compiler will calculate `offset` at compile time and not at runtime. This is actually a good thing, because otherwise [undefined behavior might occur](https://stackoverflow.com/questions/26906621/does-struct-name-null-b-cause-undefined-behaviour-in-c11).
 
@@ -62,7 +62,7 @@ The second macro to discuss, `container_of`, is defined this way:
         })
 ```
 
-It can be used with the address of a `struct` member `ptr` to find the `struct` that contains it. It can be used as follows:
+It can be used with the address of a `struct` member `ptr` to find the `struct` that contains it. The following is an example of its usage:
 
 ```c
 /* #define and #include's omitted for simplicity */
@@ -88,24 +88,24 @@ int main()
 }
 ```
 
-Especially in program that contain many nested `struct`s, it is often useful to find the address of `struct foo` based on the address of one of its members. At the first glance, `container_of` looks quite cryptic. But with some explanations, it is straight forward because we already have `offsetof` at our disposal.
+Especially in program that contain many nested `struct`s, it is often useful to find the address of `struct foo` based on the address of one of its members. At first glance, `container_of` looks quite cryptic. But with some explanations, it is straight forward because we already have `offsetof` at our disposal.
 
-The arguments to `container_of` are a pointer to the member for which we want to find the containing `struct`, the type of the containing `struct` and the name of the member in that `struct` (as shown in the example). Again, things will be broken down into steps. The macro:
+The arguments to `container_of` are a pointer to the member for which we want to find the containing `struct`, the type of the containing `struct` and the name of the member in that `struct` (as shown in the example above). Again, the operations performed by `container_of` are broken down into simple steps:
 
-- one the second line, creates a temporary pointer `_ptr` to the same address as the argument pointer `ptr` because we need to change the address it points to and don't want to screw with the user's `ptr` to do so[^4]
+- One the second line, it creates a temporary pointer `_ptr` to the same address as the argument pointer `ptr` because we need to change the address it points to and don't want to screw with the user's `ptr` to do so[^4].
 
-- one the third line, casts `_ptr` to `char *` to force the compiler to do byte-wise arithmetic (remember that `offsetof` returned a byte offset)
+- One the third line, casts `_ptr` to `char *` to force the compiler to do byte-wise arithmetic (remember that `offsetof` returned a byte offset).
 
-- then, subtracts the offset of `member` within `type` from the address stored in `_ptr` to arrive at the base address of the `struct` containing `ptr`
+- Then, subtracts the offset of `member` within `type` from the address stored in `_ptr` to arrive at the base address of the `struct` containing `ptr`.
 
-- last, the result another cast is done to return the correct type (that is, a pointer to the containing `struct` or `type *`)
+- Last, the result another cast is done to return the correct type (that is, a pointer to the containing `struct` or `type *`).
 
 # Conclusion
 Pointers are a notoriously difficult topic to understand, for beginners as well as advanced users of the C language. Thus, reproducing and understanding the implementation of macros like `container_of` and `offsetof` is a great way to consolidate knowledge while practicing abstract thinking (what points where again?). Hopefully, the explanations in this post were easy enough to follow. If you find any mistakes or have suggestions for improvements, comment below or on twitter!
 
----
+<hr class="hr-light">
 
 [^1]: I found these macros pretty difficult to fully understand at first. I had to test different versions and leave out certain pieces to approach complete understanding. I highly encourage you to do the same if I don't explain things well enough in this post!
 [^2]: Are there compilers that don't do this?
 [^3]: Some implementations of `offsetof` rely on the `NULL` pointer being at memory address 0. Since that is not part of the C specification, it shouldn't be done. The `char *` casts are required because pointer arithmetic must be done on pointers of the same type and we want to calculate `offset` in bytes!
-[^4]: The construct `typeof(((type *)0)->member)` creates a `NULL` pointer again. This is done so that we can access use `typeof` to find the type of `member` which is needed to create a correct temporary pointer `_ptr`.
+[^4]: The construct `typeof(((type *)0)->member)` creates a `NULL` pointer again. This is done so  we can use `typeof` to find the type of `member` which is needed to create a temporary pointer `_ptr` with the correct type.
