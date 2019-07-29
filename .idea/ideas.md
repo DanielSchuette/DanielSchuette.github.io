@@ -3,6 +3,9 @@
 - [ ] struct layout in C (container_of, offsetof)
 
 - GTK+ series
+- Unicode in C
+- examine `dc` and `bc` sources
+- How *good* regex works (https://en.wikipedia.org/wiki/Thompson%27s_construction)
 - OpenMP
 - strings.c explanation (copying of structs, too?)
 - ring buffer
