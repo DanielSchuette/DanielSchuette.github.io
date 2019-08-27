@@ -5,10 +5,66 @@ date:   2019-08-25 20:24:00 +0200
 categories: awk
 ---
 
-`AWK` is an interpreted programming language used for text processing and reporting. It was originally written by Alfred Aho, Peter Weinberger, and Brian Kernighan[^1] at Bell Labs and first released in 1977. Since then, `AWK` became a hugely popular tool for text stream manipulation on UNIX systems[^2] with its own POSIX standard (POSIX 1003.1). Even today, `gawk(1)`, "[the GNU Project's implementation of the `AWK` programming language](https://www.gnu.org/software/gawk/manual/gawk.html)", is still among the core utilities of the GNU/Linux operating system. Despite its usefulness, `AWK` can seem cryptic and hardly useful at first. Thus, this post is meant to be a starting point for using `AWK` productively in your coding workflow.
+`AWK` is an interpreted programming language used for text processing and reporting. It was originally written by Alfred Aho, Peter Weinberger, and Brian Kernighan[^1] at Bell Labs and first released in 1977. Since then, `AWK` became a hugely popular tool for text stream manipulation on UNIX systems[^2] with its own POSIX standard (POSIX 1003.1). Even today, `gawk(1)`, "[the GNU Project's implementation of the `AWK` programming language](https://www.gnu.org/software/gawk/manual/gawk.html)", is still among the core utilities of the GNU/Linux operating system. Despite its usefulness, `AWK` can seem cryptic and hardly useful at first. Thus, this post is meant to be a starting point for using `AWK` productively in your coding workflow[^3].
 
-# AWK Language Paradigms
-`AWK` reads an input stream line by line ...
+# Phases of an AWK Program
+An `AWK` program has three phases. First, the **BEGIN** block is executed. It's usually used to set up an environment for the program to run in, e.g. initialize variables or change `AWK`s default field separator. Next, `AWK` will read the input line by line until the end and execute one or more commands on every of those lines. And lastly, the **END** block is run which can e.g. be used for reporting of results.
+
+```awk
+BEGIN { awk-commands }
+/pattern/ { awk-commands }
+END { awk-commands }
+```
+
+`AWK`s keywords like `BEGIN` and `END` are all uppercase and code blocks are enclosed by curly braces. The program's body can be prefixed with a `/pattern/` which filters lines based on regular expressions. That's really how difficult things get. Everything mentioned in this section will be demonstrated using examples below.
+
+# Hello World with AWK
+The following program prints the string *hello world* once and exits:
+
+```awk
+BEGIN { print("hello world") }
+```
+
+`print` is a builtin `AWK` function that takes a string and outputs it to `stdout`. As in most C-like programming languages, function arguments are enclosed in parentheses. It is valid to omit them, though (i.e. `print "hello world"` is a valid function call, too). Also, an `AWK` program is valid with any combination of `BEGIN`, `END` and body blocks, none of them is required[^4]. To execute the program above, run:
+
+```bash
+awk -f hello.awk
+```
+
+Programs can be provided to `awk(1)` directly via a command line option, too (`man awk` for different ways to invoke `AWK`):
+
+```bash
+awk 'BEGIN { print "hello world" }'
+```
+
+# Processing an Input File
+Next, we'll look at line-wise processing of an input file. The first six entries of the used example file are shown below:
+
+```bash
+cat input.txt | head -n 6
+# Name            Class Dorm           Room GPA
+# Sally Whittaker 2018  McCarren House 312  3.75
+# Belinda Jameson 2017  Cushing House  148  3.52
+# Jeff Smith      2018  Prescott House 17-D 3.20
+# Sandy Allen     2019  Oliver House   108  3.48
+# Jim Patterson   2017  White House    97   2.99
+```
+
+The following program prints at a message at program start and exit using `printf` which is similar to the C function of the same name:
+
+```awk
+BEGIN { printf("contents of input.txt:\n") }
+{
+    print
+}
+END { printf("end of input.txt.\n") }
+```
+
+In the body block, every line read from `input.txt` is provided as an argument to `print` which results in literal printing of that line.
+
+<hr class="hr-light">
 
 [^1]: The word `AWK` is an acronym formed from the first letters of its authors' last names.
 [^2]: All programmers deal with text on a daily basis and `AWK` is one of the best tools to achieve even complex transformations relatively easily. For example, instead of writing a new `Python` program for analyzing or reformatting your source code, consider using `AWK` next time!
+[^3]: That's why this post deals with `AWK` only and *doesn't* explain concepts like loops or how to run programs on a UNIX system.
+[^4]: Without any of the three, the resulting program obviously does not do anything at all.
