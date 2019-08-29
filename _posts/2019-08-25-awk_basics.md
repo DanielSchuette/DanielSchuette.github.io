@@ -86,7 +86,7 @@ BEGIN {
 `/some_regex/` matches the current record against a regular expression first. It is possible to have a filtered and an unfiltered block in an `AWK` program at the same time.
 
 # Built-in Variables
-`AWK` provides a number of built-in variables that determine a program's behavior, the field separator is among them. Their defaults can be changed for the whole program in the `BEGIN` block:
+There are a number of built-in variables that determine a program's behavior, the field separator is among them. Their defaults can be changed for the whole program in the `BEGIN` block:
 
 ```awk
 BEGIN {
@@ -105,7 +105,7 @@ BEGIN {
 ```
 
 # Using Variables in an AWK Program
-The following `AWK` program shows how to use variables in a program along with some C-like syntax for incrementing a counter and formatting strings in `printf`:
+The following `AWK` program shows how to use custom variables along with some C-like syntax for incrementing a counter and formatting strings in `printf`:
 
 ```awk
 BEGIN { count=0 }
@@ -117,11 +117,20 @@ BEGIN { count=0 }
 END { printf("number of lines in file: %d\n", count) }
 ```
 
-# Built-in Functions in AWK
+# Built-in Functions
 We already mentioned two functions for printing text to the screen (`print` and `printf`). In `AWK`, a number of useful functions exist:
 
 1. `length(var)` returns the length of a string in characters
 1. ...
+
+# Control Flow
+...
+
+# Using Functions in AWK
+...
+
+# Conclusion
+...
 
 <hr class="hr-light">
 
