@@ -25,13 +25,13 @@ The following program prints the string *hello world* once and exits:
 BEGIN { print("hello world") }
 ```
 
-`print` is a builtin `AWK` function that takes a string and outputs it to `stdout`. As in most C-like programming languages, function arguments are enclosed in parentheses. It is valid to omit them, though (i.e. `print "hello world"` is a valid function call, too). Also, an `AWK` program is valid with any combination of `BEGIN`, `END` and body blocks, none of them is required[^4]. To execute the program above, run:
+`print` is a built-in `AWK` function that takes a string and outputs it to `stdout`. As in most C-like programming languages, function arguments are enclosed in parentheses. It is valid to omit them, though (i.e. `print "hello world"` is a valid function call, too). Also, an `AWK` program is valid with any combination of `BEGIN`, `END` and body blocks, none of them is required[^4]. To execute the program above, run:
 
 ```bash
 awk -f hello.awk
 ```
 
-Programs can be provided to `awk(1)` directly via a command line option, too (`man awk` for different ways to invoke `AWK`):
+Programs can be provided to `awk(1)` directly via a command line option, too (`man awk` for different ways to invoke `AWK`[^5]):
 
 ```bash
 awk 'BEGIN { print "hello world" }'
@@ -62,9 +62,71 @@ END { printf("end of input.txt.\n") }
 
 In the body block, every line read from `input.txt` is provided as an argument to `print` which results in literal printing of that line.
 
+# Printing Fields of a Record
+`AWK` splits every read line (also called record in `AWK`s jargon) into fields using a white space as the default separator. These fields are then available through variables `$1`, `$2`, `$3`, and so forth, `$0` holds the entire input line. The following examples demonstrates their usage:
+
+```awk
+BEGIN {
+    # this is a comment
+}
+
+# the following block gets filtered based on a regular expression
+/2018/ {
+    # if e.g. `$12' doesn't exist, nothing is printed instead
+    print($1 " -- " $2 " -- " $3 " -- " $12 "\n")
+}
+
+# the following block doesn't get filtered
+{
+    print
+}
+
+```
+
+`/some_regex/` matches the current record against a regular expression first. It is possible to have a filtered and an unfiltered block in an `AWK` program at the same time.
+
+# Built-in Variables
+`AWK` provides a number of built-in variables that determine a program's behavior, the field separator is among them. Their defaults can be changed for the whole program in the `BEGIN` block:
+
+```awk
+BEGIN {
+    FS="," # the default is " "
+    # OFS is the output field separator
+    # RS is the record separator (separator between lines, '\n' by default)
+    # ORS is the output record separator
+    # NR is the number of records in a file
+    # NF is the number of fields in a line
+    # FILENAME is the name of the current input file
+}
+
+{
+    print
+}
+```
+
+# Using Variables in an AWK Program
+The following `AWK` program shows how to use variables in a program along with some C-like syntax for incrementing a counter and formatting strings in `printf`:
+
+```awk
+BEGIN { count=0 }
+
+{
+    count++
+}
+
+END { printf("number of lines in file: %d\n", count) }
+```
+
+# Built-in Functions in AWK
+We already mentioned two functions for printing text to the screen (`print` and `printf`). In `AWK`, a number of useful functions exist:
+
+1. `length(var)` returns the length of a string in characters
+1. ...
+
 <hr class="hr-light">
 
 [^1]: The word `AWK` is an acronym formed from the first letters of its authors' last names.
 [^2]: All programmers deal with text on a daily basis and `AWK` is one of the best tools to achieve even complex transformations relatively easily. For example, instead of writing a new `Python` program for analyzing or reformatting your source code, consider using `AWK` next time!
 [^3]: That's why this post deals with `AWK` only and *doesn't* explain concepts like loops or how to run programs on a UNIX system.
 [^4]: Without any of the three, the resulting program obviously does not do anything at all.
+[^5]: Other useful flags are `-v name=value` which assigns a value to a variable before script execution, `--dump-variables` and `--lint`.
