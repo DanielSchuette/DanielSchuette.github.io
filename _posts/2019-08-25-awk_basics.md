@@ -97,6 +97,9 @@ BEGIN {
     # NR is the number of records in a file
     # NF is the number of fields in a line
     # FILENAME is the name of the current input file
+    # ARGC is the number of arguments (equivalent to C's `argc')
+    # ARGV is the argument array (0 to ARGC-1)
+    # ENVIRON is an associative array of env variables (ENVIRON["VAR"])
 }
 
 {
@@ -110,23 +113,39 @@ The following `AWK` program shows how to use custom variables along with some C-
 ```awk
 BEGIN { count=0 }
 
-{
-    count++
-}
+{ count++ }
 
 END { printf("number of lines in file: %d\n", count) }
 ```
 
+In addition, variables can be used with arithmetic (`+`, `-`, `*`, `/`, `%`), logical (`&&`, `||`, `!`) and relational (`==`, `<=`, `>=`, `>`, `<`) operators. Strings can be concatenated like this: `new_str = str1 str2`.
+
+`AWK` also supports associative arrays which are similar to e.g. Python's `dict` type. `my_array["a_value"] = 42` assigns a number to an entry in the array, `printf("%d\n", my_array["a_value"])` retrieves it[^6].
+
 # Built-in Functions
-We already mentioned two functions for printing text to the screen (`print` and `printf`). In `AWK`, a number of useful functions exist:
+We already mentioned two functions for printing text to the screen (`print` and `printf`). In `AWK`, a number of other useful functions exist:
 
-1. `length(var)` returns the length of a string in characters
-1. ...
+1. `length(str)` returns the length of a string in characters
+1. `match(str, substr)` returns the index of `substr` in `str` in `RSTART` and a boolean indicating a match
+1. `...`
 
-# Control Flow
+# Control Flow and Looping
+`AWK` control flow statements and looping constructs are similar to C. The following example demonstrates their basic usage:
+
+```awk
+{
+    for (i = 0; i < 10; i++) {
+        if (i < 5) {
+            printf("index: %d\n")
+        }
+    }
+}
+```
+
+# Custom Functions in AWK
 ...
 
-# Using Functions in AWK
+# Regular Expression Usage
 ...
 
 # Conclusion
@@ -139,3 +158,4 @@ We already mentioned two functions for printing text to the screen (`print` and 
 [^3]: That's why this post deals with `AWK` only and *doesn't* explain concepts like loops or how to run programs on a UNIX system.
 [^4]: Without any of the three, the resulting program obviously does not do anything at all.
 [^5]: Other useful flags are `-v name=value` which assigns a value to a variable before script execution, `--dump-variables` and `--lint`.
+[^6]: Array indices like `arr[1] = 42` can be used, but they don't need to be a continuous set of numbers. String and number indices can be mixed, because everything is an associative array in `AWK`.
