@@ -150,7 +150,6 @@ We already mentioned two functions for printing text to the screen (`print` and 
 1. `match(str, substr)` returns the index of `substr` in `str` in `RSTART` and a boolean indicating a match
 1. `...`
 
-
 # Custom Functions in AWK
 ...
 
