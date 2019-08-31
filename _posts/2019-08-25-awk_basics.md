@@ -102,18 +102,18 @@ In addition, variables can be used with arithmetic (`+`, `-`, `*`, `/`, `%`), lo
 
 There are a number of built-in variables that determine a program's behavior, the field separator is one of them. Their defaults can be changed for the whole program in the `BEGIN` block:
 
-| Built-in | Meaning                                                                    |
-|----------|----------------------------------------------------------------------------|
-| FS       | is the field separator (default is `" "`)                                  |
-| OFS      | is the output field separator                                              |
-| RS       | is the record separator (separator between lines, `"\n"` by default)       |
-| ORS      | is the output record separator                                             |
-| NR       | is the number of records in a file                                         |
-| NF       | is the number of fields in a line                                          |
-| FILENAME | is the name of the current input file                                      |
-| ARGC     | is the number of arguments (equivalent to C's `argc`)                      |
-| ARGV     | is the argument array (`0` through `ARGC-1`)                               |
-| ENVIRON  | is an associative array of `env` variables (`ENVIRON["VAR"]`)              |
+| Built-in | Meaning                                                                 |
+|----------|-------------------------------------------------------------------------|
+| FS       | the field separator (default is `" "`)                                  |
+| OFS      | the output field separator                                              |
+| RS       | the record separator (separator between lines, `"\n"` by default)       |
+| ORS      | the output record separator                                             |
+| NR       | the number of records in a file                                         |
+| NF       | the number of fields in a line                                          |
+| FILENAME | the name of the current input file                                      |
+| ARGC     | the number of arguments (equivalent to C's `argc`)                      |
+| ARGV     | the argument array (`0` through `ARGC-1`)                               |
+| ENVIRON  | an associative array of `env` variables (`ENVIRON["VAR"]`)              |
 
 # Built-in Functions
 We already mentioned two functions for printing text to the screen (`print` and `printf`). In `AWK`, a number of other useful functions exist:
@@ -135,10 +135,22 @@ We already mentioned two functions for printing text to the screen (`print` and 
 }
 ```
 
-# Custom Functions in AWK
-...
-
 # Regular Expression Usage
+`AWK` has strong support for regular expressions. Since this is not a regex tutorial, the general concept of regular expression-based pattern matching [is not explained](https://en.wikipedia.org/wiki/Regular_expression#Basic_concepts). The following table summarizes the most important operations to construct regex in `AWK`:
+
+| Operation   | Matches                                                 |
+|-------------|---------------------------------------------------------|
+| `.`         | any single character except `"\n"`                      |
+| `^`         | the start of a line                                     |
+| `$`         | the end of a line                                       |
+| `[abc]`     | one of several characters (a character set)             |
+| `[^abc]`    | none of several characters (an exclusive character set) |
+| `(aaa|bbb)` | one of two string (`()` are required for grouping)      |
+| `?`         | zero or one occurance of the preceding character        |
+| `*`         | zero or more occurances of the preceding character      |
+| `+`         | one or more occurances of the preceding character       |
+
+# Custom Functions in AWK
 ...
 
 # Conclusion
