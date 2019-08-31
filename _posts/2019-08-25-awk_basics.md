@@ -86,7 +86,7 @@ BEGIN {
 `/some_regex/` matches the current record against a regular expression first. It is possible to have a filtered and an unfiltered block in an `AWK` program at the same time.
 
 # Using Variables in an AWK Program
-The following `AWK` program shows how to use custom variables along with some C-like syntax for incrementing a counter and formatting strings in `printf`:
+The following `AWK` program shows how to use custom variables along with some C-like syntax for incrementing a counter and formatting strings with `printf`:
 
 ```awk
 BEGIN { count=0 }
@@ -98,28 +98,22 @@ END { printf("number of lines in file: %d\n", count) }
 
 In addition, variables can be used with arithmetic (`+`, `-`, `*`, `/`, `%`), logical (`&&`, `||`, `!`) and relational (`==`, `<=`, `>=`, `>`, `<`) operators. Strings can be concatenated like this: `new_str = str1 str2`.
 
-`AWK` also supports associative arrays which are similar to e.g. Python's `dict` type. `my_array["a_value"] = 42` assigns a number to an entry in the array, `printf("%d\n", my_array["a_value"])` retrieves it[^6].
+`AWK` also supports associative arrays which are similar to e.g. Python's `dict` type. `my_array["a_value"] = 42` assigns a number to an entry in the array, `printf("%d\n", my_array["a_value"])` retrieves it[^6] and `delete my_array["a_value"]` deletes it.
 
-There are a number of built-in variables that determine a program's behavior, the field separator is among them. Their defaults can be changed for the whole program in the `BEGIN` block:
+There are a number of built-in variables that determine a program's behavior, the field separator is one of them. Their defaults can be changed for the whole program in the `BEGIN` block:
 
-```awk
-BEGIN {
-    FS="," # the default is " "
-    # OFS is the output field separator
-    # RS is the record separator (separator between lines, '\n' by default)
-    # ORS is the output record separator
-    # NR is the number of records in a file
-    # NF is the number of fields in a line
-    # FILENAME is the name of the current input file
-    # ARGC is the number of arguments (equivalent to C's `argc')
-    # ARGV is the argument array (0 to ARGC-1)
-    # ENVIRON is an associative array of env variables (ENVIRON["VAR"])
-}
-
-{
-    print
-}
-```
+| Built-in | Meaning                                                                    |
+|----------|----------------------------------------------------------------------------|
+| FS       | is the field separator (default is `" "`)                                  |
+| OFS      | is the output field separator                                              |
+| RS       | is the record separator (separator between lines, `"\n"` by default)       |
+| ORS      | is the output record separator                                             |
+| NR       | is the number of records in a file                                         |
+| NF       | is the number of fields in a line                                          |
+| FILENAME | is the name of the current input file                                      |
+| ARGC     | is the number of arguments (equivalent to C's `argc`)                      |
+| ARGV     | is the argument array (`0` through `ARGC-1`)                               |
+| ENVIRON  | is an associative array of `env` variables (`ENVIRON["VAR"]`)              |
 
 # Built-in Functions
 We already mentioned two functions for printing text to the screen (`print` and `printf`). In `AWK`, a number of other useful functions exist:
