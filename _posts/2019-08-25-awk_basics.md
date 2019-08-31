@@ -85,7 +85,21 @@ BEGIN {
 
 `/some_regex/` matches the current record against a regular expression first. It is possible to have a filtered and an unfiltered block in an `AWK` program at the same time.
 
-# Built-in Variables
+# Using Variables in an AWK Program
+The following `AWK` program shows how to use custom variables along with some C-like syntax for incrementing a counter and formatting strings in `printf`:
+
+```awk
+BEGIN { count=0 }
+
+{ count++ }
+
+END { printf("number of lines in file: %d\n", count) }
+```
+
+In addition, variables can be used with arithmetic (`+`, `-`, `*`, `/`, `%`), logical (`&&`, `||`, `!`) and relational (`==`, `<=`, `>=`, `>`, `<`) operators. Strings can be concatenated like this: `new_str = str1 str2`.
+
+`AWK` also supports associative arrays which are similar to e.g. Python's `dict` type. `my_array["a_value"] = 42` assigns a number to an entry in the array, `printf("%d\n", my_array["a_value"])` retrieves it[^6].
+
 There are a number of built-in variables that determine a program's behavior, the field separator is among them. Their defaults can be changed for the whole program in the `BEGIN` block:
 
 ```awk
@@ -106,21 +120,6 @@ BEGIN {
     print
 }
 ```
-
-# Using Variables in an AWK Program
-The following `AWK` program shows how to use custom variables along with some C-like syntax for incrementing a counter and formatting strings in `printf`:
-
-```awk
-BEGIN { count=0 }
-
-{ count++ }
-
-END { printf("number of lines in file: %d\n", count) }
-```
-
-In addition, variables can be used with arithmetic (`+`, `-`, `*`, `/`, `%`), logical (`&&`, `||`, `!`) and relational (`==`, `<=`, `>=`, `>`, `<`) operators. Strings can be concatenated like this: `new_str = str1 str2`.
-
-`AWK` also supports associative arrays which are similar to e.g. Python's `dict` type. `my_array["a_value"] = 42` assigns a number to an entry in the array, `printf("%d\n", my_array["a_value"])` retrieves it[^6].
 
 # Built-in Functions
 We already mentioned two functions for printing text to the screen (`print` and `printf`). In `AWK`, a number of other useful functions exist:
