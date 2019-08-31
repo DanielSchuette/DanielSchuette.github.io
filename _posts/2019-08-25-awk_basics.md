@@ -115,13 +115,6 @@ There are a number of built-in variables that determine a program's behavior, th
 | ARGV     | the argument array (`0` through `ARGC-1`)                               |
 | ENVIRON  | an associative array of `env` variables (`ENVIRON["VAR"]`)              |
 
-# Built-in Functions
-We already mentioned two functions for printing text to the screen (`print` and `printf`). In `AWK`, a number of other useful functions exist:
-
-1. `length(str)` returns the length of a string in characters
-1. `match(str, substr)` returns the index of `substr` in `str` in `RSTART` and a boolean indicating a match
-1. `...`
-
 # Control Flow and Looping
 `AWK` control flow statements and looping constructs are similar to C. The following example demonstrates their basic usage:
 
@@ -149,6 +142,14 @@ We already mentioned two functions for printing text to the screen (`print` and 
 | `?`         | zero or one occurance of the preceding character        |
 | `*`         | zero or more occurances of the preceding character      |
 | `+`         | one or more occurances of the preceding character       |
+
+# Built-in Functions
+We already mentioned two functions for printing text to the screen (`print` and `printf`). In `AWK`, a number of other useful functions exist:
+
+1. `length(str)` returns the length of a string in characters
+1. `match(str, substr)` returns the index of `substr` in `str` in `RSTART` and a boolean indicating a match
+1. `...`
+
 
 # Custom Functions in AWK
 ...
