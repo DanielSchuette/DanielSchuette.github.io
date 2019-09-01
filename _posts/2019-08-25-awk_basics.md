@@ -198,7 +198,7 @@ We already mentioned two functions for printing text to the screen (`print` and 
 1. `strftime(fmt, systime())` formats the output of `systime()` according to `fmt`
 1. `and(num1, num2)`, `or(num1, num2)`, `xor(num1, num2)`, `rshift(num1, num2)`, `lshift(num1, num2)`, `compl(num)` do the respective bitwise calculations on their arguments
 
-There are many more functions one can us, some of them even allow for execution of shell programs from within `AWK` (e.g. with the `system(cmd)` function). Please refer to the documentation of your `AWK` implementation to learn about more advanced topics.
+There are many more functions one can us, some of them even allow for execution of shell programs from within `AWK` (e.g. with the `system(cmd)` function). Please refer to the documentation of your `AWK` implementation to learn about more advanced topics like that.
 
 # Custom Functions in AWK
 In addition to the built-ins above, users can define their own, custom functions to achieve code re-usability. They are defined using the `function` keyword and return values using the `return` keyword. Calling a custom function works the same way as calling a built-in:
