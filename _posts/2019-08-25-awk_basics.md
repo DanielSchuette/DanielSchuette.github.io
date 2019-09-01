@@ -147,6 +147,24 @@ There are a number of built-in variables that determine a program's behavior, th
 }
 ```
 
+Furthermore, a `while` (and `do-while`) loops exists as well as `continue` and `break` statements:
+
+```awk
+{
+    i = 0
+    while (1) {
+        if (i > 5) {
+            print("breaking out of loop")
+            break
+        } else {
+            print("still looping")
+            i++
+            continue
+        }
+    }
+}
+```
+
 # Regular Expression Usage
 `AWK` has strong support for regular expressions. Since this is not a regex tutorial, the general concept of regular expression-based pattern matching [is not explained](https://en.wikipedia.org/wiki/Regular_expression#Basic_concepts). The following table summarizes the most important operations to construct regex in `AWK`:
 
@@ -167,13 +185,73 @@ We already mentioned two functions for printing text to the screen (`print` and 
 
 1. `length(str)` returns the length of a string in characters
 1. `match(str, substr)` returns the index of `substr` in `str` in `RSTART` and a boolean indicating a match
-1. `...`
+1. `exit(num)` exits the program with `num` as the return status
+1. `sin(num)`, `cos(num)`, `log(num)` return the sine, cosine and natural logarithm of `num`
+1. `rand()` returns a random number between `0` and `1` (the seed can be set via `srand(num)`)
+1. `asort(arr)` sorts the array `arr`
+1. `gsub(regex, sub, str)` globally replaces occurrences of `sub` in `str` with `regex` (if `str` is omitted, `$0` is used; `sub(regex, sub, str)` exists, too)
+1. `index(str, sub)` returns the index of `sub` in `str`, starting at `1` (`0` if strings don't match)
+1. `split(str, arr, regex)` splits `str` into fields based on `regex` (fields are now accessible through `arr`)
+1. `int(num)`, `strtonum(str)` truncates `num` to an integer and returns the numerical value of `str`, respectively
+1. `tolower(str)`, `toupper(str)` return a copy of `str` in lower- or uppercase
+1. `systime()` returns the seconds since the epoch
+1. `strftime(fmt, systime())` formats the output of `systime()` according to `fmt`
+1. `and(num1, num2)`, `or(num1, num2)`, `xor(num1, num2)`, `rshift(num1, num2)`, `lshift(num1, num2)`, `compl(num)` do the respective bitwise calculations on their arguments
+
+There are many more functions one can us, some of them even allow for execution of shell programs from within `AWK` (e.g. with the `system(cmd)` function). Please refer to the documentation of your `AWK` implementation to learn about more advanced topics.
 
 # Custom Functions in AWK
-...
+In addition to the built-ins above, users can define their own, custom functions to achieve code re-usability. They are defined using the `function` keyword and return values using the `return` keyword. Calling a custom function works the same way as calling a built-in:
+
+```awk
+function add(a, b) {
+    res = a + b
+    return res
+}
+
+{
+    c = add(1, 2)
+    print c
+}
+```
+
+# Output Redirection
+The UNIX shell's redirection operators `>` and `>>` have a special meaning in `AWK` programs, too. Consider the following example:
+
+```bash
+awk 'BEGIN { print "some log message" > "/tmp/awk_log"}'
+```
+
+The program above writes a string to a log file. `>>` would have appended the string to the file if it already existed. Another shell concept are pipes and (surprise, surprise) those do exist in `AWK`, too:
+
+```bash
+awk 'BEGIN { print "important information\nnot interesting at all" | "grep important" }'
+```
+
+For executing shell commands that are more complex than e.g. the `grep` command above, one would probably pipe `AWK`s output over to a shell script, though. Lastly, a two-way communication channel can be established with `|&` if a user wants to use the output of a shell command in the remainder of their `AWK` program:
+
+```awk
+BEGIN {
+    # define the shell command
+    cmd = "grep important"
+
+    # execute the command
+    print "important information\nnot interesting at all" |& cmd
+
+    # close the sending end of the channel
+    close(cmd, "to")
+
+    # use `getline' to store the output of `cmd' in `out'
+    # `out' can now be used like a regular variable
+    cmd |& getline out
+
+    # finally, close the receiving end of the channel
+    close(cmd)
+}
+```
 
 # Conclusion
-...
+`AWK` is a Turing complete, interpreted programming language for text manipulation and analysis with a C-like syntax, a vast amount of built-in functions and variables, an associative array data type, and shell communication features. Even though this post only touches the surface of `AWK`s capabilities and didn't provide more than toy examples of how to use the language, now you hopefully got all the basics needed to use `AWK` productively for day-to-day tasks like scanning log files, extracting knowledge from source code, re-structuring CSV files and much more. Please let me know in the comments or via [Twitter](https://twitter.com/DogtorDash) if you have any questions or suggestions for improvement!
 
 <hr class="hr-light">
 

@@ -165,7 +165,7 @@ int main(void)
 ```
 
 # Final Thoughts
-I haven't really used `union`s in my own code so far, so it was really helpful to see this use case and the elegant code it produces. If you like this example of C `union`s and/or have questions/concerns related to the code or any explanations, [please send me your feedback via twitter](https://twitter.com/DogtorDash)!
+I haven't really used `union`s in my own code so far, so it was really helpful to see this use case and the elegant code it produces. If you like this example of C `union`s and/or have questions/concerns related to the code or any explanations, [please send me your feedback via Twitter](https://twitter.com/DogtorDash)!
 
 # The Full Example:
 <script src="https://gist.github.com/DanielSchuette/eda98376a3b6f750d649d0eb23b16602.js"></script>
