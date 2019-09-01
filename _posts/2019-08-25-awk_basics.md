@@ -5,7 +5,7 @@ date:   2019-08-25 20:24:00 +0200
 categories: awk
 ---
 
-`AWK` is an interpreted programming language used for text processing and reporting. It was originally written by Alfred Aho, Peter Weinberger, and Brian Kernighan[^1] at Bell Labs and first released in 1977. Since then, `AWK` became a hugely popular tool for text stream manipulation on UNIX systems[^2] with its own POSIX standard (POSIX 1003.1). Even today, `gawk(1)`, "[the GNU Project's implementation of the `AWK` programming language](https://www.gnu.org/software/gawk/manual/gawk.html)", is still among the core utilities of the GNU/Linux operating system. Despite its usefulness, `AWK` can seem cryptic and hardly useful at first. Thus, this post is meant to be a starting point for using `AWK` productively in your coding workflow[^3].
+`AWK` is an interpreted programming language used for text processing and reporting. It was originally written by Alfred Aho, Peter Weinberger, and Brian Kernighan[^1] at Bell Labs and first released in 1977. Since then, `AWK` became a hugely popular tool for text stream manipulation on UNIX systems[^2] with its own POSIX standard (POSIX 1003.1). Even today, `gawk(1)`, "[the GNU Project's implementation of the `AWK` programming language](https://www.gnu.org/software/gawk/manual/gawk.html)", is still among the core utilities of the GNU/Linux operating system. Despite its usefulness, `AWK` can seem cryptic and hardly useful at first. Thus, this post is meant to be a starting point for using `AWK` productively in your coding workflow[^3]. It is assumed that you have at least some programming experience in a language like C or Python and some concepts will be presented implicitly through examples instead of explaining every little detail. Please ask any questions in the comments section!
 
 # Phases of an AWK Program
 An `AWK` program has three phases. First, the **BEGIN** block is executed. It's usually used to set up an environment for the program to run in, e.g. initialize variables or change `AWK`s default field separator. Next, `AWK` will read the input line by line until the end and execute one or more commands on every of those lines. And lastly, the **END** block is run which can e.g. be used for reporting of results.
@@ -25,7 +25,7 @@ The following program prints the string *hello world* once and exits:
 BEGIN { print("hello world") }
 ```
 
-`print` is a built-in `AWK` function that takes a string and outputs it to `stdout`. As in most C-like programming languages, function arguments are enclosed in parentheses. It is valid to omit them, though (i.e. `print "hello world"` is a valid function call, too). Also, an `AWK` program is valid with any combination of `BEGIN`, `END` and body blocks, none of them is required[^4]. To execute the program above, run:
+`print` is a built-in `AWK` function that takes a string and outputs it to `stdout`, followed by a new line. As in most C-like programming languages, function arguments are enclosed in parentheses. It is valid to omit them, though (i.e. `print "hello world"` is a valid function call, too). Also, an `AWK` program is valid with any combination of `BEGIN`, `END` and body blocks, none of them is required[^4]. To execute the program above, run:
 
 ```bash
 awk -f hello.awk
@@ -60,30 +60,47 @@ BEGIN { printf("contents of input.txt:\n") }
 END { printf("end of input.txt.\n") }
 ```
 
-In the body block, every line read from `input.txt` is provided as an argument to `print` which results in literal printing of that line.
+In the body block, every line read from `input.txt` is by default provided as an argument to `print` which results in literal printing of that line. This happens because no explicit arguments were given to `print` in this example.
 
 # Printing Fields of a Record
-`AWK` splits every read line (also called record in `AWK`s jargon) into fields using a white space as the default separator. These fields are then available through variables `$1`, `$2`, `$3`, and so forth, `$0` holds the entire input line. The following examples demonstrates their usage:
+`AWK` splits every read line (also called record in `AWK`s jargon) into fields using a white space as the default separator. These fields are then available through variables `$1`, `$2`, `$3`, and so forth, `$0` holds the entire input line. The following examples demonstrates their usage (refer to the comments to fully understand the example):
 
 ```awk
 BEGIN {
     # this is a comment
 }
 
-# the following block gets filtered based on a regular expression
+# -- Start of AWK's implicit main loop -- #
+
+# the following block gets filtered based on a regular expression,
+# i.e. only gets executed if a match occurred
 /2018/ {
     # if e.g. `$12' doesn't exist, nothing is printed instead
-    print($1 " -- " $2 " -- " $3 " -- " $12 "\n")
+    print($1 " -- " $2 " -- " $3 " -- " $12)
 }
 
-# the following block doesn't get filtered
+# the following block doesn't get filtered, i.e. gets executed with
+# every line of input
 {
     print
 }
 
+# -- End of AWK's implicit main loop -- #
 ```
 
-`/some_regex/` matches the current record against a regular expression first. It is possible to have a filtered and an unfiltered block in an `AWK` program at the same time.
+`/some_regex/` matches the current record against a regular expression first. It is possible to have a filtered and an unfiltered main block in an `AWK` program at the same time. Every of those blocks gets executed with every newly read record until `AWK` finds the end of the input file. Thus, the program above produces the following output:
+
+```bash
+awk -f main.awk input.txt
+# Name            Class Dorm           Room GPA
+# Sally -- Whittaker -- 2018
+# Sally Whittaker 2018  McCarren House 312  3.75
+# Belinda Jameson 2017  Cushing House  148  3.52
+# Jeff -- Smith -- 2018
+# Jeff Smith      2018  Prescott House 17-D 3.20
+# Sandy Allen     2019  Oliver House   108  3.48
+# Jim Patterson   2017  White House    97   2.99
+```
 
 # Using Variables in an AWK Program
 The following `AWK` program shows how to use custom variables along with some C-like syntax for incrementing a counter and formatting strings with `printf`:
@@ -116,13 +133,15 @@ There are a number of built-in variables that determine a program's behavior, th
 | ENVIRON  | an associative array of `env` variables (`ENVIRON["VAR"]`)              |
 
 # Control Flow and Looping
-`AWK` control flow statements and looping constructs are similar to C. The following example demonstrates their basic usage:
+`AWK` control flow statements and looping constructs are (again) similar to the syntax of the C programming language. The following example demonstrates their basic usage:
 
 ```awk
 {
     for (i = 0; i < 10; i++) {
         if (i < 5) {
-            printf("index: %d\n")
+            printf("smaller than 5\n")
+        } else {
+            printf("equal to or larger than 5\n")
         }
     }
 }
