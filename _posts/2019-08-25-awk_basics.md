@@ -147,7 +147,7 @@ There are a number of built-in variables that determine a program's behavior, th
 }
 ```
 
-Furthermore, a `while` (and `do-while`) loops exists as well as `continue` and `break` statements:
+Furthermore, a `while` (and `do-while`) loop exists along with `continue` and `break` statements:
 
 ```awk
 {
