@@ -60,6 +60,9 @@ If a user does not want to use the new feature, it is just as easy to revert `ma
 patch -R < important_feature.patch
 ```
 
+# Creating Patches for Entire Source Trees
+...
+
 # Summary
 ...
 
