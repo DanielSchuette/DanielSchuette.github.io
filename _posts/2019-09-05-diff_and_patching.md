@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Generating Patches Using `diff(1)`"
+title:  "Generating Patches Using diff(1)"
 date:   2019-09-05 21:58:00 +0200
 categories: unix
 ---
