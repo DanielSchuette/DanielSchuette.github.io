@@ -12,6 +12,7 @@
 - strings.c explanation (copying of structs, too?)
 - [kill](http://www.csl.mtu.edu/cs4411.ck/www/NOTES/signal/kill.html)
 
+- exponentiation by squaring (binary exponentiation)
 - GTK+ series
 - unicode in C
 - examine `dc` and `bc` sources
