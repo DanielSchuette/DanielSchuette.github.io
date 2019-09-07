@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "The Union Type in C"
+title:  "The C Union Type"
 date:   2019-07-21 18:05:00 +0200
 categories: c
 ---
