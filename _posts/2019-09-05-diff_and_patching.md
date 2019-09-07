@@ -8,7 +8,7 @@ categories: unix
 On Unix systems, patches generated with `diff(1)` provide a convenient method to update source files without having to modify any code manually. Some open source software projects like *[suckless](https://suckless.org/)* actually rely on patching as a mechanism for adding features to programs. Also, patches can be used to easily share code between programmers during software development. In this short post, we will explore the basics of generating patches with `diff(1)` and applying patches with `patch(1)`.
 
 # How to Generate a Patch
-Imaging the following two *C* source files:
+Imagine the following two *C* source files:
 
 ```c
 /* main.c */
@@ -19,7 +19,9 @@ int main(void)
     printf("hello user!\n");
     return 0;
 }
+```
 
+```c
 /* main_with_feature.c */
 #include <stdio.h>
 
@@ -33,7 +35,7 @@ int main(int argc, char **argv)
 }
 ```
 
-In `main_with_feature.c`, the programmer added a highly important feature that improves the usability of his company's software by *a lot*. Thus, users that already use `main.c` require a convenient way to update their sources[^1]. The first step to achieve this is creation of a *patch* that we can distribute to users:
+In `main_with_feature.c`, the programmer added a highly important feature that improves the usability of his company's software by *a lot*. Thus, users that already use `main.c` require a convenient way to update their sources[^1]. The first step to achieve this is the creation of a *patch* that we can distribute to users:
 
 ```bash
 diff -u main.c main_with_feature.c > important_feature.patch
