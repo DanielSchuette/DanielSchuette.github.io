@@ -60,11 +60,26 @@ If a user does not want to use the new feature, it is just as easy to revert `ma
 patch -R < important_feature.patch
 ```
 
+During development, it might not always be clear whether a patch can be applied without errors. Thus, `patch(1)` has flags to create a backup as well as perform a dry run to test for any errors:
+
+```bash
+patch -b < important_feature.patch          # creates a backup `main.c.orig'
+patch --dry-run < important_feature.patch   # perform a dry run
+```
+
 # Creating Patches for Entire Source Trees
-...
+A more complicated use cases are patches for multiples files that might be scattered throughout different project directories. But because `diff(1)` is great, it can compare two multi-file, multi-directory software project recursively with the following command:
+
+```bash
+diff -Naur ./source_tree-v0.0.1 ./source_tree-v0.0.2 > tree.patch
+```
+
+If users now applies `tree.patch` to `source_tree-v0.0.1`, they will have upgraded from one version to the other in no time.
 
 # Summary
-...
+`diff(1)` and `patch(1)` are great tools to upgrade source files and share features with users and other developers. In this post, we only discussed the very basics. Obviously, every tool has its limitations though. After applying multiple patches, it gets more and more difficult for `patch(1)` to figure out how to include yet another patch file. At some point it might even be necessary to start editing code manually. Thus, it is always a good idea to think about whether a new major release is more appropriate than shipping another patch.
+
+As always, I hope you enjoyed reading this post. Please let me know in the comments or via [Twitter](https://twitter.com/DogtorDash) if you have any questions or suggestions for improvement!
 
 <hr class="hr-light">
 
