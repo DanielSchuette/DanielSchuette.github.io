@@ -5,7 +5,7 @@ date:   2019-08-19 14:59:00 +0200
 categories: linux
 ---
 
-On *Unix*-like operating systems like *Linux*, every process has its own address space, i.e. a range of physical addresses it can access without causing a segmentation fault. Even tough the operating system creates the illusion of a continuous range of virtual addresses that a process might use, physical memory is limited and different processes are by design limited to using their own sets of physical addresses to not interfere with each other. The following schematic shows how hardware addresses are related to this software abstraction.
+On *Unix*-like operating systems like *Linux*, every process has its own address space, i.e. a range of physical addresses it can access without causing a segmentation fault. Even tough the operating system creates the illusion of a continuous range of virtual addresses that a process might use, physical memory is limited and different processes are by design restricted to using their own sets of physical addresses to not interfere with each other. The following schematic shows how hardware addresses are related to this software abstraction.
 
 ![Physical and virtual addresses](../../../../assets/addresses.png)
 
