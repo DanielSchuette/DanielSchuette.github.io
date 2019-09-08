@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "The X Window System on Linux"
+title:  "The X Window System Explained"
 date:   2019-09-08 23:54:00 +0200
 categories: unix
 ---
