@@ -10,7 +10,16 @@ The *X Window System* (usually abbreviated as *X11*) implements a basic set of g
 More advanced graphics elements that are necessary to build GUIs -- like buttons or menus -- are left to APIs like *GTK+* that build upon *X11*. Different *Linux* desktop environments like *GNOME* or *KDE* look completely different, even if they run on an *X11* server as a windowing system backend. *X11* really just defines the protocols and primitives for the design of graphical application interfaces.
 
 # Creating an X11 Window
-...
+The following three header files are required to work with *X11*. They must be included in the right order, otherwise strange behavior or even errors might occur:
+
+```c
+/* header are usually found in /usr/include/X11 */
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/Xos.h>
+```
+
+
 
 # Receiving Keyboard Input
 ...
