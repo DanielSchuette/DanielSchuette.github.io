@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "The X Window System API"
+title:  "Introduction to the X Window System API"
 date:   2019-09-08 23:54:00 +0200
 categories: unix
 ---
@@ -10,50 +10,63 @@ The *X Window System* (usually abbreviated as *X11*) implements a basic set of g
 More advanced graphics elements that are necessary to build GUIs -- like buttons or menus -- are left to APIs like *GTK+* that build upon *X11*. Different *Linux* desktop environments like *GNOME* or *KDE* look completely different, even if they run on an *X11* server as a windowing system backend. *X11* really just defines the protocols and primitives for the design of graphical application interfaces.
 
 # Creating an X11 Window
-To work with *X11*, a number of header files must be included (in this post, only `<X11/Xlib.h>` is actually required):
+To work with *X11*, a number of header files can be included:
 
 ```c
-/* header are usually found in /usr/include/X11 */
+/* headers are usually found in /usr/include/X11 */
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Xos.h>
+#include <X11/Xatom.h>
+#include <X11/cursorfont.h>
+#include <X11/keysym.h>
+#include <X11/Xft/Xft.h>
+#include <X11/XKBlib.h>
 ```
 
-*X11* follows a client -- server model. A connection is characterized by two variables:
+In this post, we will mainly work with `Xlib`. The *X11* protocol follows a client -- server architecture and `Xlib` is a commonly used implementation of an `X11` **client**. There are other libraries that do the same thing, e.g. `XCB`, but we won't cover their APIs in this post.
+
+Broadly speaking, a client can connect to an `X11` server and request the creation of windows or receive events from it. This model has the advantage of enabling remote `X11` sessions where client and server run on different systems and communicate via some kind of network connection. This post won't talk about `X11` server implementations at all. To learn more about those, `man xinit` is a good starting point.
+
+A client -- server connection is characterized a few variables that are usually declared globally to be accessible by all API calls. `X11` makes a clear distinction between a **display** and its associated physical **screen**:
 
 ```c
-Display *display; /* can be thought of as the backend (server) */
-int screen;       /* represents the actual screen (client) */
+static Display *display; /* information about device where graphical operations are done */
+static int screen;       /* represents the actual, physical screen */
 ```
 
 Another three variables holding window, context, and event information, will be passed around function calls, too:
 
 ```c
-Window window; /* windows are controlled via this variable */
-GC context;    /* the graphics context determines rendering behavior */
-Event event;   /* filled with window events in the event loop */
+static Window window; /* windows are controlled via this variable */
+static GC context;    /* the graphics context determines rendering behavior */
+static Event event;   /* filled with window events in the event loop */
 ```
 
-To create a window, a number of API functions need to be called:
+The five variables above are used by a client to request specific operations from the server. If the client wants to change literally anything, e.g. windows features, colors, fonts, and so forth, it must obtain an identifier from the server and call an appropriate function with it. The server might than fulfill the request -- or not.
+
+For a client to create a window, a number of API functions need to be called:
 
 ```c
 void create_window(void) {
     unsigned long black, white;
     Atom del_window;
 
-    /* get a display and a screen */
+    /* create a connection to the server */
     display = XOpenDisplay(NULL);
     if (display == NULL) {
         fprintf(stderr, "failed to open an X11 display\n");
         exit(1);
     }
+
+    /* get the default screen associated with the display */
     screen = DefaultScreen(display);
 
-    /* get black and white colors */
+    /* define black and white colors */
     black = BlackPixel(display, screen);
     white = WhitePixel(display, screen);
 
-    /* now, create a window at position (10, 10) of size (200, 300) */
+    /* request the creation of a window at position (10, 10) of size (200, 300) */
     window = XCreateSimpleWindow(display, RootWindow(display),
                                  10, 10, 200, 300, 1, black, white);
 
@@ -68,7 +81,7 @@ void create_window(void) {
     del_window = XInternAtom(display, "WM_DELETE_WINDOW", 0);
     XSetWMProtocols(display, window, &del_window, 1);
 
-    /* define which events are accepted by the window */
+    /* select which events are listened to by the window */
     XSelectInput(display, window, ExposureMask | KeyPressMask);
 
     /* move window to the top */
@@ -78,12 +91,13 @@ void create_window(void) {
 
 Since this post is meant to be a starting point for *X11* programming, the functions above aren't explained in much detail. Extensive documentation is available online, though.
 
-After creating a window, an event queue is polled using `XNextEvent()`.
+After creating a window, an event queue can be polled using `XNextEvent()`:
 
 ```c
     while(1) {
         XNextEvent(display, &event);
-        /* draw a small black rectangle */
+
+        /* draw a small black rectangle whenever the window is not covered (i.e. exposed) */
         if(event.type == Expose)
             XFillRectangle(display, window, context, 20, 20, 10, 10);
 
@@ -95,7 +109,7 @@ After creating a window, an event queue is polled using `XNextEvent()`.
     }
 ```
 
-Lastly, system resources are freed by destroying the window and closing the display:
+Lastly, system resources should be freed by destroying the window and closing the display:
 
 ```c
     XDestroyWindow(display, window);
@@ -108,7 +122,10 @@ When compiling the code above, the linker needs to be instructed to link against
 gcc -o prog main.c -lX11
 ```
 
-Running `prog` opens a white window which -- as expected -- closes upon any key press. A small black cube is drawn to it, too.
+Running `prog` opens a white window which -- as expected -- closes upon any key press. A small black cube is drawn to it, too. We should not forget that this code only works if there is an `X11` server running that our client code can talk to. If your *GNU/Linux* distribution does not use `X11` as its windowing system, `XOpenDisplay()` will fail because there is no display it could obtain. That's why you should always check if this function call succeeded or not.
+
+# The XEvent API
+...
 
 # Summary
 ...
