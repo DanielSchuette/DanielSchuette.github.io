@@ -95,6 +95,7 @@ After creating a window, an event queue can be polled using `XNextEvent()`:
 
 ```c
     while(1) {
+        /* get the next event (blocks if there is none) */
         XNextEvent(display, &event);
 
         /* draw a small black rectangle whenever the window is not covered (i.e. exposed) */
@@ -124,8 +125,73 @@ gcc -o prog main.c -lX11
 
 Running `prog` opens a white window which -- as expected -- closes upon any key press. A small black cube is drawn to it, too. We should not forget that this code only works if there is an `X11` server running that our client code can talk to. If your *GNU/Linux* distribution does not use `X11` as its windowing system, `XOpenDisplay()` will fail because there is no display it could obtain. That's why you should always check if this function call succeeded or not.
 
-# The XEvent API
-...
+# Drawing to a Window
+`Xlib` provides a number of functions for drawing graphical primitives to a window. They usually take a `Display`, a `Window`, a `GC`, and a number of variables that determine the starting position, width, height, etc. of the shape that's to be drawn:
+
+```c
+XDrawLine(display, window, context, x1, y1, x2, y2);
+XDrawArc(display, window, context, x, y, width, height, arc_start, arc_stop);
+XDrawRectangle(display, window, context, x, y, width, height)
+XFillArc(display, window, context, x, y, width, height, arc_start, arc_stop);
+XFillRectangle(display, window, context, x, y, width, height);
+XDrawString(display, window, context, x, y, string, strlen(string));
+```
+
+See its `man` page for more information about a specific function.
+
+# How X11 Handles Colors
+When using the functions above, you will notice that *X11* uses the current fore- and background colors of the window (i.e. the ones specified during window creation). One can create and use more colors than just black and white, tough:
+
+```c
+/* get_color: return a pixel value corresponding to `col_name'. */
+unsigned long get_color(const char *col_name)
+{
+    XColor color;
+
+    XParseColor(display, DefaultColormap(display, screen), col_name, &color);
+    XAllocColor(display, DefaultColormap(display, screen), &color);
+    return color.pixel;
+}
+```
+
+To figure out which name a specific *RGB* color value has, read `/usr/share/X11/rgb.txt`. In addition to using explicit names, colors can also be specified using their *RGB* representation. Consult `man XColor` for more information.
+
+Whereas the code above creates a shared color map, private color maps exist, too. Creating them is a little more difficult and works as follows:
+
+```c
+void create_private_colormap() {
+	int i;
+	Colormap map;
+	XColor color[255];
+
+	for(i = 0; i < 255; i++) {
+		color[i].pixel = i;
+		color[i].flags = DoRed | DoGreen | DoBlue;
+		color[i].red = i*256;
+		color[i].blue = i*256;
+		color[i].green = i*256;
+	}
+
+	map = XCreateColormap(display, RootWindow(display, screen),
+		                  DefaultVisual(display, screen), AllocAll);
+	XStoreColors(display, map, color, 255);
+	XSetWindowColormap(display, window, map);
+}
+
+/* later, this resource should be freed */
+XFreeColormap(display, map);
+```
+
+Either way, to apply that newly generated color information to a window, one more function needs to be called:
+
+```c
+XSetForeground(display, context, some_pixel_value);
+```
+
+In this call, `some_pixel_value` is the `XColor.pixel` member of an individual color of either a shared or private color map.
+
+# More Advanced Topics
+XImage, .xbm files, cursors, etc.
 
 # Summary
 ...
