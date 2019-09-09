@@ -13,15 +13,44 @@ More advanced graphics elements that are necessary to build GUIs -- like buttons
 To work with *X11*, a number of header files can be included:
 
 ```c
-/* headers are usually found in /usr/include/X11 */
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <X11/Xos.h>
-#include <X11/Xatom.h>
-#include <X11/cursorfont.h>
-#include <X11/keysym.h>
-#include <X11/Xft/Xft.h>
-#include <X11/XKBlib.h>
+/*
+ * Headers are usually found in `/usr/include/X11'.
+ * The information below stems from:
+ * https://en.wikibooks.org/wiki/X_Window_Programming/XLib/Standard_Headers
+ */
+#include <X11/X10.h> 	    /* X10 compatibility functions, types and symbols. */
+#include <X11/Xatom.h> 	    /* All predefined atoms, which are symbols with the prefix `XA_`.*/
+#include <X11/cursorfont.h> /* Standard cursor font symbols, which have the `XC_` prefix. */
+#include <X11/X.h> 	        /* Types and constants for applications. Included automatically
+                               within <X11/Xlib.h>. */
+#include <X11/keysymdef.h> 	/* Standard KeySym values, which are symbols with the prefix ``XK_``.
+                               KeySyms are arranged in groups, and a preprocessor symbol controls
+                               inclusion of each group. The preprocessor symbol must be defined
+                               prior to inclusion of the file to obtain the associated values.
+                               The preprocessor symbols are XK_MISCELLANY, XK_LATIN1, XK_LATIN2,
+                               XK_LATIN3, XK_LATIN4, XK_KATAKANA, XK_ARABIC, XK_CYRILLIC, XK_GREEK,
+                               XK_TECHNICAL, XK_SPECIAL, XK_PUBLISHING, XK_APL, XK_HEBREW, XK_THAI,
+                               and XK_KOREAN.
+                             */
+#include <X11/keysym.h> 	/* Defines the preprocessor symbols XK_MISCELLANY, XK_LATIN1, XK_LATIN2,
+                               XK_LATIN3, XK_LATIN4, and XK_GREEK and then includes <X11/keysymdef.h>
+                             */
+#include <X11/Xlib.h> 	    /* Main header for Xlib which contains the majority of all symbols. Since
+                               release 5, contains the preprocessor symbol XlibSpecificationRelease.
+                             */
+#include <X11/Xlibint.h> 	/* Functions, types, and symbols used for extensions. Automatically includes
+                               <X11/Xlib.h>.
+                             */
+#include <X11/Xcms.h> 	    /* Color management functions, types and constants, which begin with the
+                               prefix ``Xcms`. Color Conversion Contexts macros are also declared in
+                               this file. Depends on <X11/Xlib.h> being included first.
+                             */
+#include <X11/Xutil.h> 	    /* Inter-client communication and application utility functions, types and
+                               symbols. Depends on <X11/Xlib.h> being included first.
+                             */
+#include <X11/Xresource.h> 	/* Resource Manager functions, types, and symbols. Depends on <X11/Xlib.h>
+                               being included first.
+                             */
 ```
 
 In this post, we will mainly work with `Xlib`. The *X11* protocol follows a client -- server architecture and `Xlib` is a commonly used implementation of an `X11` **client**. There are other libraries that do the same thing, e.g. `XCB`, but we won't cover their APIs in this post.
