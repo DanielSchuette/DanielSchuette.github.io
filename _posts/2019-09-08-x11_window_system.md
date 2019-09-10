@@ -57,9 +57,9 @@ To work with *X11*, a number of header files can be included:
 
 In this post, we will work with `Xlib`. The *X11* protocol follows a client -- server architecture and `Xlib` is a commonly used implementation of an `X11` **client**. There are other libraries that do the same thing, e.g. `XCB`, but we won't cover their APIs in this post.
 
-Broadly speaking, a client can connect to an `X11` server and request the creation of windows or receive events from it. This model has the advantage of enabling remote `X11` sessions where client and server run on different systems and communicate via some kind of networking connection. This post won't talk about `X11` server implementations, though. To learn more about those, `man xinit` is a good starting point.
+Broadly speaking, a client can connect to an `X11` server and request the creation of windows or receive events from it. This model has the advantage of enabling remote `X11` sessions where client and server run on different systems and communicate via some kind of networking connection. This post won't talk about `X11` server implementations, though. To learn more about those, `man xinit` is the way to go.
 
-A client-to-server connection is characterized a few variables that are usually declared globally to be accessible by all API calls. `X11` makes a clear distinction between a **display** and its associated physical **screen**:
+A client-to-server connection is characterized by a few variables that are usually declared globally to be accessible by all API calls. `X11` makes a clear distinction between a **display** and its associated physical **screen**:
 
 ```c
 static Display *display; /* information about device where graphical operations are done */
