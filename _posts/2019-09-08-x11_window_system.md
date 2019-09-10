@@ -68,9 +68,11 @@ Another three variables holding window, context, and event information, will be 
 
 ```c
 static Window window; /* windows are controlled via this variable */
-static GC context;    /* the graphics context determines rendering behavior */
+static GC context;    /* see below for an explanation */
 static Event event;   /* filled with window events in the event loop */
 ```
+
+One other, important property of `X11` is its statelessness. A `GC` (graphics context) saves the current drawing state between operations. Thus, we need to pass it to the server every time some drawing operation is requested.
 
 The five variables above are used by a client to request specific operations from the server. If the client wants to change literally anything, e.g. windows features, colors, fonts, and so forth, it must obtain an identifier from the server and call an appropriate function with it. The server might than fulfill the request -- or not.
 
@@ -124,7 +126,12 @@ After creating a window, an event queue can be polled using `XNextEvent()`:
 
 ```c
     while(1) {
-        /* get the next event (blocks if there is none) */
+        /*
+         * get the next event (blocks if there is none)
+         * XNextEvent() calls XFlush(), so we don't need to explicitly
+         * flush the request queue (requests are not send to the server
+         * one-by-one but batch-wise!)
+         */
         XNextEvent(display, &event);
 
         /* draw a small black rectangle whenever the window is not covered (i.e. exposed) */
