@@ -11,7 +11,7 @@ The implementation of more advanced and abstract graphics elements that are nece
 
 Again, *X11* is **not** designed to be a GUI library. Thus, most programmers will never need to use it directly. But knowing some of the underlying principles can still facilitate an understanding of the *Linux* graphics stack.
 
-# Creating an X11 Window
+# Creating an *X11* Window
 To work with *X11*, a number of header files can be included:
 
 ```c
@@ -177,7 +177,7 @@ XDrawString(display, window, context, x, y, string, strlen(string));
 
 They all do what their names imply. If you have any questions, you should consult their `man` pages for more information.
 
-# How X11 Handles Colors
+# How *X11* Handles Colors
 When calling the functions above, you will notice that *X11* uses the current fore- and background colors of the window (i.e. the ones specified during window creation). For a nice GUI, one needs to use more colors than just black and white, tough[^2]:
 
 ```c
