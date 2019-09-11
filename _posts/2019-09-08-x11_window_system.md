@@ -167,6 +167,7 @@ Running `prog` opens a white window which -- as expected -- closes upon any key 
 `Xlib` provides a number of functions for drawing graphical primitives to a window. They usually take a `Display`, a `Window`, a `GC`, and a number of variables that determine the starting position, width, height, etc. of the shape that's to be drawn:
 
 ```c
+XDrawPoint(display, window, context, x, y);
 XDrawLine(display, window, context, x1, y1, x2, y2);
 XDrawArc(display, window, context, x, y, width, height, arc_start, arc_stop);
 XDrawRectangle(display, window, context, x, y, width, height)
