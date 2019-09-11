@@ -5,6 +5,8 @@
 - ring buffer
 
 ## Do next
+- isomorphism
+- 3D graphics (https://www.youtube.com/watch?v=HXSuNxpCzdM)
 - shared memory and ring buffer example
 - finish shell (2 more parts)
 - threads in C
