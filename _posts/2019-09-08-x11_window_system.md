@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Introduction to the X Window System API"
+title:  "Introduction to the X Window System"
 date:   2019-09-08 23:54:00 +0200
 categories: unix
 ---
