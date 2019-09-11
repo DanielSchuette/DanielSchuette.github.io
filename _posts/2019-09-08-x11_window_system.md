@@ -74,11 +74,11 @@ static GC context;    /* see below for an explanation */
 static Event event;   /* filled with window events in the event loop */
 ```
 
-One other, important property of `X11` is its statelessness. A `GC` (graphics context) saves the current drawing state between operations. Thus, we need to pass it to the server every time some state change is requested.
+One other, important property of `X11` is its statelessness. To be able to preserve state nevertheless, a `GC` (graphics context) must be used. The current settings used for drawing are saved in it and we need to pass it to the server every time some drawing operation is requested. See `man XCreateGC()` for detailed information on which settings are available and how to set them using masks.
 
-The five variables above are used by a client to ask the server to perform specific operations. If the client wants to change literally anything, e.g. window features, colors, fonts, and so forth, it must obtain an identifier from the server and call an appropriate function with it. The server might than fulfill the request -- or not.
+To summarize things, the five variables above are used by a client to ask the server to perform specific operations and how to perform them. If the client wants to change literally anything, e.g. window features, colors, fonts, and so forth, it must obtain an identifier from the server and call an appropriate function with it. The server might then fulfill the request -- or not.
 
-For a client to create a window, a number of functions need to be called:
+Let's dive into some actual code, though. For a client to create a window, a number of functions need to be called:
 
 ```c
 void create_window(void) {
