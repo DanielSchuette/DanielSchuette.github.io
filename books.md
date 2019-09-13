@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'Books'
+title: 'Book Recommendations'
 order: 4
 comments: false
 permalink: /books/

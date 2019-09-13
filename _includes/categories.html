@@ -1,0 +1,45 @@
+<ul class="">
+{% assign categories_list = site.categories %}
+  {% if categories_list.first[0] == null %}
+    {% for category in categories_list %}
+      <div class="category-list-item">
+        <li>
+          <a href="#{{ category | downcase | downcase | url_escape | strip | replace: ' ', '-' }}">{{ category | camelcase }} ({{ site.tags[category].size }})</a>
+        </li>
+      </div>
+    {% endfor %}
+  {% else %}
+    {% for category in categories_list %}
+      <li class="category-list-item"><a href="#{{ category[0] | downcase | url_escape | strip | replace: ' ', '-' }}">{{ category[0] | camelcase }} ({{ category[1].size }})</a></li>
+    {% endfor %}
+  {% endif %}
+{% assign categories_list = nil %}
+</ul>
+
+<h2 class="post-list-heading">By Category</h2>
+
+{% for category in site.categories %}
+  <h2 id="{{ category[0] | downcase | strip }}">{{ category[0] | capitalize }}</h2>
+  <ul class="post-list">
+    {% assign pages_list = category[1] %}
+
+    {% for post in pages_list %}
+      {% if post.title != null %}
+      {% if group == null or group == post.group %}
+
+      <li>
+        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+        <span class="post-meta">{{ post.date | date: date_format }}</span>
+          <a class="post-link" href="{{ post.url | relative_url }}">
+            {{ post.title | escape }}
+          </a>
+      </li>
+
+      {% endif %}
+      {% endif %}
+    {% endfor %}
+
+    {% assign pages_list = nil %}
+    {% assign group = nil %}
+  </ul>
+{% endfor %}
