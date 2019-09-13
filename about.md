@@ -3,7 +3,7 @@ layout: post
 title: 'About'
 order: 3
 comments: false
-permalink: /links/
+permalink: /about/
 ---
 
 Click on any of the links below to learn more about me:
