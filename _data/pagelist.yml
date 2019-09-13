@@ -1,15 +1,12 @@
 header_items:
-    - title: Home
-      url: /
-
     - title: About
       url: /about/
 
-    - title: Links
-      url: /links/
+    - title: Articles
+      url: /articles/
 
-    - title: Shell
-      url: /shell/
+    - title: Contact
+      url: /contact/
 
-    - title: Compiler
-      url: /compiler/
+    - title: Books 📚
+      url: /books/
