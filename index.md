@@ -1,6 +1,7 @@
 ---
-layout: home
+layout: post
 title: 'Home'
+comments: false
 order: 1
 permalink: /
 ---

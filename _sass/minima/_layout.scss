@@ -104,7 +104,7 @@
  * Site footer
  */
 .site-footer {
-  border-top: 3px solid $grey-color-light;
+  // border-top: 3px solid $grey-color-light;
   padding: $spacing-unit 0;
 }
 
@@ -256,6 +256,6 @@
  * Custom Styles
  */
 .hr-light {
-    border-top: 1px solid $grey-color-light;
+    border: 1px solid #e8e8e8;
     margin-bottom: 8px;
 }
