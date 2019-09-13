@@ -1,10 +1,11 @@
 ---
 layout: post
-title: 'Links'
+title: 'About'
 order: 3
 comments: false
 permalink: /links/
 ---
+
 Click on any of the links below to learn more about me:
 
 - [GitHub](https://github.com/DanielSchuette)
@@ -13,6 +14,6 @@ Click on any of the links below to learn more about me:
 - [Researchgate](https://www.researchgate.net/profile/Daniel_Schuette)
 - [Google Scholar](https://scholar.google.de/citations?user=IKh9vokAAAAJ&hl=en)
 
-If you're interested in mathematics, visit the site below!
+If you're interested in mathematics, give this site a shot:
 
 - [World of Mathematics](https://philippschuette.github.io)
