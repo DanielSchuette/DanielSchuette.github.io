@@ -32,6 +32,8 @@ Unfortunately, there are cases where this strategy doesn't work. Why is that? We
 
 ![Grid With Sums](../../../../assets/grid_with_sums.png)
 
+The integer on every tile is replaced with itself added to the sum of the previous tile. That's easy enough if a tile can only be reached from one other tile. The last tile (the "finish") is special, though. It can be reached from two tiles, i.e. tiles `grid[0][1]` and `grid[1][0]` if we represent the grid using a 2-dimensional array[^2]. The problem statement requires us to find the minimal sum, so we choose the smaller of the two and calculate the sum. Put into pseudocode, we do `MIN(grid[0][1], grid[1][0]) + grid[1][1]` to get to the solution.
+
 ...
 
 # The Code
@@ -47,3 +49,4 @@ As always, I hope you enjoyed reading this post. Please let me know in the comme
 <hr class="hr-light">
 
 [^1]: We won't even discuss computational complexity of *DP* algorithms in this post. Maybe in the future, another post will cover more advanced topics, though.
+[^2]: And zero-indexed, as in most programming languages.
