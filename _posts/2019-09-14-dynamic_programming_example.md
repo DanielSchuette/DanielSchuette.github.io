@@ -30,9 +30,12 @@ How do we decide which path to take? With the `2x2` grid, we can just compare al
 
 Unfortunately, there are cases where this strategy doesn't work. Why is that? Well, we have to consider **the sum** of all the numbers on the tiles we pass from start to finish. In the `2x2` grid, that is easy to achieve (ignore the `3x3` grid for the time being):
 
-![Grid Wrong Example](../../../../assets/grid_with_sums.png)
+![Grid With Sums](../../../../assets/grid_with_sums.png)
+
+...
 
 # The Code
+...
 
 # Final Thoughts
 There is an entire class of problems that is incredibly hard to solve without a dynamic programming approach. In our case for example, it just isn't feasible to iteratively try every path through the grid to find the minimal sum of integers. Whereas it's certainly possible for small grids, any such solution will not generalize at all to larger grids.
