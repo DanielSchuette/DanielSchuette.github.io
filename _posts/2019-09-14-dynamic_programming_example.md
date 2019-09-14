@@ -11,7 +11,7 @@ This might sound strange at first and far too abstract to be useful for solving 
 
 # The Problem
 
-Sometimes, computational problems have just too many "degrees of freedom" to be solvable via an iterative algorithm. By that I mean problems that cannot be tackled by e.g. using multiple, nested `for` loops because we would just need too many of them. Lets consider [this Project Euler](https://projecteuler.net/problem=81) problem. Given the grid below, we want to find the **minimal sum of integers** along a **path from the top left to the bottom right**. In every step, one can only go **right or down** (**not** diagonally):
+Sometimes, computational problems have just too many "degrees of freedom" to be solvable via an iterative algorithm. By that I mean problems that cannot be tackled by e.g. using multiple, nested `for` loops because we would just need too many of them. Lets consider a problem similar to [this Project Euler](https://projecteuler.net/problem=81) question. Given a grid like the one below, we want to find the **minimal sum of integers** along a **path from the top left to the bottom right**. In every step, one can only go **right or down** (**not** diagonally):
 
 ![Grid Example](../../../../assets/grid_basic.png)
 
