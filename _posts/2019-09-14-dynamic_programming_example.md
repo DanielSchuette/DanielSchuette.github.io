@@ -7,7 +7,7 @@ categories: algorithms
 
 *Dynamic programming* (or *DP*) is an algorithmic method that breaks a rather complex computational problem up into smaller problems that are -- hopefully -- much easier to solve. The algorithm solving that sub-problem is then applied multiple times, either recursively or iteratively, to create an overall problem solution.
 
-This might sound strange at first and far too abstract to be useful for solving any actual problems. Also, an extensive body of literature discussing *dynamic programming* exists and it might look like you need to know a lot of theory to use *DP* at all. To get you started with dynamic programming without diving into anything mathematics- or theory-related[^1], this post talk about just one, concrete example of *DP*.
+This might sound strange at first and far too abstract to be useful for solving any actual problems. Also, an extensive body of literature discussing *dynamic programming* exists and it might look like you need to know a lot of theory to use *DP* at all. To get you started with dynamic programming without diving into anything mathematics- or theory-related[^1], this post talks about just one, concrete example of *DP*.
 
 # The Problem
 
