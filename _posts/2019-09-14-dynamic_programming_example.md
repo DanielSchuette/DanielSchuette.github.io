@@ -18,12 +18,28 @@ Sometimes, computational problems have just too many "degrees of freedom" to be 
 The overall problem solution is the sum of the integers along the green path, i.e. `4 + 2 + 6 + 3 + 1 + 8 = 24`. According to the problem definition, `24` is the correct solution only if there is **no other, valid path** that yields a smaller sum.
 
 # The Solution
-...
+As we said in the introduction, the basis of *dynamic programming* is identifying a sub-problem that's easy to solve. One can then try to construct a solution for the original problem from there.
+
+Now, if we look at the grid above, we first look at the simplest scenario possible and try to find a solution for it. That is, a `1x1` grid where the final result would be the integer written into that one and only tile. There is no path to find because start and finish are at the same tile. The next, more difficult grid to solve has the dimensions `2x2`. If we were able to find a pattern or commonality between the `1x1` and the `2x2` grid (and maybe one more grid of dimensions `3x3`), we could already have an algorithm at hand that we could use to solve grids with all kinds of dimensions. Even if not, we might learn something useful to derive such an algorithm. Take a look at the following grids:
+
+![Grid Easy Example](../../../../assets/grid_easy.png)
+
+How do we decide which path to take? With the `2x2` grid, we can just compare all possible paths by hand. `4 + 7 + 6 = 17` is larger than `4 + 2 + 6 = 12`, so the second path is the correct solution. It's already getting more difficult to find the optimal path in a `3x3` grid, though. A possible algorithm would be to always go to the tile that has a smaller integer written on it. Let's try it:
+
+![Grid Wrong Example](../../../../assets/grid_wrong.png)
+
+Unfortunately, there are cases where this strategy doesn't work. Why is that? Well, we have to consider **the sum** of all the numbers on the tiles we pass from start to finish. In the `2x2` grid, that is easy to achieve (ignore the `3x3` grid for the time being):
+
+![Grid Wrong Example](../../../../assets/grid_with_sums.png)
+
+# The Code
 
 # Final Thoughts
-There is an entire class of problems that is incredibly hard to solve without a dynamic programming approach. In our case for example, it just isn't feasible to iteratively try every path through the grid to find the minimal sum of integers. Whereas it's certainly possible for small grids, any such solution will not generalize to larger grids at all.
+There is an entire class of problems that is incredibly hard to solve without a dynamic programming approach. In our case for example, it just isn't feasible to iteratively try every path through the grid to find the minimal sum of integers. Whereas it's certainly possible for small grids, any such solution will not generalize at all to larger grids.
 
-Thus, realizing a key feature of the problem -- in this case ...
+This post tried to explain some of the reasoning behind *DP* as well as how to approach a problem where you might feel like *DP* could be a viable option. Computer algorithms aren't always as easy as the example above, so some of my future posts might expand on the topic of algorithmic thinking and *dynamic programming* in particular.
+
+As always, I hope you enjoyed reading this post. Please let me know in the comments or via [Twitter](https://twitter.com/DogtorDash) if you have any questions or suggestions for improvement!
 
 <hr class="hr-light">
 

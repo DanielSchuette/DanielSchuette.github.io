@@ -11,6 +11,11 @@ On *Unix*-like operating systems like *Linux*, every process has its own address
 
 Now, some applications require a way for processes to communicate ([inter-process communication](https://en.wikipedia.org/wiki/Inter-process_communication) or *IPC*) and one option to exchange messages or data is via shared memory[^1]. As we saw above, processes (as opposed to threads) are not usually able to access memory pages they don't own. Conveniently enough, *POSIX* provides a standardized API to ...
 
+# "Content"
+
+# Summary
+...
+
 <hr class="hr-light">
 
 [^1]: Other *IPC* methods on *Linux* include sockets, signals, message queues, and pipes, among others.
