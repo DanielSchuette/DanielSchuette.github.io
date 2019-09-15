@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <limits.h>
 
 #define ROWS 3
 #define COLS 4

@@ -32,12 +32,72 @@ Unfortunately, there are cases where this strategy doesn't work. Why is that? We
 
 ![Grid With Sums](../../../../assets/grid_with_sums.png)
 
-The integer on every tile is replaced with itself added to the sum of the previous tile. That's easy enough if a tile can only be reached from one other tile. The last tile (the "finish") is special, though. It can be reached from two tiles, i.e. tiles `grid[0][1]` and `grid[1][0]` if we represent the grid using a 2-dimensional array[^2]. The problem statement requires us to find the minimal sum, so we choose the smaller of the two and calculate the sum. Put into pseudocode, we do `MIN(grid[0][1], grid[1][0]) + grid[1][1]` to get to the solution.
+The integer on every tile is replaced with the sum of itself added to the integer written on the previous tile. That's easy enough if a tile can only be reached from one other tile. The last tile (the "finish") is special, though. It can be reached from two tiles, i.e. tiles `grid[0][1]` and `grid[1][0]` if we represent the grid using a 2-dimensional array[^2]. The problem statement requires us to find the minimal sum, so we choose the smaller of the two to calculate it. Put into pseudocode, we do `MIN(grid[0][1], grid[1][0]) + grid[1][1]` to get to the solution. Take another look at the left grid in the figure above. Hopefully, you'll be able to see why those calculations make sense. The green path highlights the fact that we have to add a `6` from tile `grid[1][0]` to the `6` on tile `grid[1][0]` to find the smallest sum possible. That's because `grid[1][0] < grid[0][1]` or `6 < 11`.
 
-...
+Now, let's try to expand this approach to a `3x3` grid. As we said above, *dynamic programming* means expanding sub-problem solutions to larger, more complex problems. In the `2x2` grid, we calculated intermediate sums by looking at possible previous tiles and adding their integer to the integer of the tile we're currently at. If there is just one possible previous tile, i.e. the current tile is at the edge of the grid, the calculation was simple. If there are two previous tiles (remember, we are only allowed to go right and down), we have to use the smaller integer to ensure that the resulting sum is minimized. If we apply this strategy to a `3x3` grid, the figure above demonstrates the resulting calculations. Green arrows indicate the path we take to **get to a certain tile** to **minimize** the integer written onto it. On the other hand, red arrows indicate how we **cannot get to a tile** because according to our new algorithm, such a path would not minimize the value written on the tile that the arrow is pointing towards.
+
+To give one more example, consider tile `grid[1][1]`. It has `6` written onto it and we must decide what value to add. We can reach the tile only via `grid[0][1] = 11` and `grid[1][0] = 6`, so we choose the smaller of the two and write `6 + 6 = 12` on the tile. After applying this procedure to all tiles in the grid, tile `grid[2][2]` holds the minimal sum and thus the result
 
 # The Code
-...
+The following *C* program demonstrates how to actually implement our *DP* algorithm. Every single step of it was explained extensively, so you shouldn't have any problems to understand it:
+
+```c
+#include <stdio.h>
+
+#define ROWS 3
+#define COLS 4
+
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+
+/* the grid to solve */
+static int grid[ROWS][COLS] = {
+    { 3, 2, 1, 3 },
+    { 1, 9, 2, 3 },
+    { 9, 1, 5, 4 }
+};
+
+/* dump_arr: print an array to stdout. */
+void dump_arr(const int arr[ROWS][COLS])
+{
+    int i, j;
+
+    for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLS; j++) {
+            printf("%d ", arr[i][j]);
+        }
+        putc('\n', stdout);
+    }
+}
+
+/* dynamic: return the solution; see problem definition for details. */
+int dynamic(int grid[ROWS][COLS])
+{
+    int i, j;
+
+    for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLS; j++) {
+            if (i == 0 && j == 0) /* first tile keeps its value */
+                continue;
+            else if (i == 0)      /* first row: prev tile must be left */
+                grid[i][j] += grid[i][j-1];
+            else if (j == 0)      /* first col: prev tile must be above */
+                grid[i][j] += grid[i-1][j];
+            else                  /* prev tile can be left or above */
+                grid[i][j] += MIN(grid[i-1][j], grid[i][j-1]);
+        }
+    }
+
+    dump_arr(grid); /* just to see the intermediate results */
+    return grid[ROWS-1][COLS-1];
+}
+
+int main(void)
+{
+    printf("solution: %d\n", dynamic(grid));
+
+    return 0;
+}
+```
 
 # Final Thoughts
 There is an entire class of problems that is incredibly hard to solve without a dynamic programming approach. In our case for example, it just isn't feasible to iteratively try every path through the grid to find the minimal sum of integers. Whereas it's certainly possible for small grids, any such solution will not generalize at all to larger grids.
