@@ -71,7 +71,7 @@ Another three variables holding window, graphics context, and event information,
 ```c
 static Window window; /* windows are controlled via this variable */
 static GC context;    /* see below for an explanation */
-static Event event;   /* filled with window events in the event loop */
+static XEvent event;  /* filled with window events in the event loop */
 ```
 
 One other, important property of `X11` is its statelessness. To be able to preserve state nevertheless, a `GC` (graphics context) must be used. The current settings used for drawing are saved in it and we need to pass it to the server every time some drawing operation is requested. See `man XCreateGC()` for detailed information on which settings are available and how to set them using masks.
@@ -100,15 +100,15 @@ void create_window(void) {
     white = WhitePixel(display, screen);
 
     /* request the creation of a window at position (10, 10) of size (200, 300) */
-    window = XCreateSimpleWindow(display, RootWindow(display),
+    window = XCreateSimpleWindow(display, DefaultRootWindow(display),
                                  10, 10, 200, 300, 1, black, white);
 
     /* create a graphics context */
     context = XCreateGC(display, window, 0, 0);
 
     /* set window properties */
-    XSetStandardProperties(display, window, "My X11 Window", "Minimized",
-                           None, NULL, 0, NULL);
+    XmbSetWMProperties(display, window, "My X11 Window", "Minimized", NULL, 0,
+                       NULL, NULL, NULL);
 
     /* set up window delete events */
     del_window = XInternAtom(display, "WM_DELETE_WINDOW", 0);
@@ -137,13 +137,13 @@ while(1) {
     XNextEvent(display, &event);
 
     /* draw a small black rectangle whenever the window is not covered (i.e. exposed) */
-    if(event.type == Expose)
+    if (event.type == Expose)
         XFillRectangle(display, window, context, 20, 20, 10, 10);
 
     /* end the loop upon any key press or client message (e.g. delete event) */
-    if(event.type == KeyPress)
+    if (event.type == KeyPress)
         break;
-    if(event.type == ClientMessage)
+    if (event.type == ClientMessage)
        break;
 }
 ```
