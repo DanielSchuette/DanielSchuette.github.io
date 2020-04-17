@@ -13,11 +13,11 @@ int main(void) {
     if (pid > 0) exit(EXIT_SUCCESS);
 
     /* Change the file mode mask */
-    //umask(0);
+    umask(0);
 
     /* Create a new SID for the child process */
-    //sid = setsid();
-    //if (sid < 0) exit(EXIT_FAILURE);
+    sid = setsid();
+    if (sid < 0) exit(EXIT_FAILURE);
 
     /* Change the current working directory */
     if ((chdir("/")) < 0) exit(EXIT_FAILURE);
