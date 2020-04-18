@@ -10,61 +10,84 @@
 
 #define ARR_LEN(x)      ( sizeof((x)) / sizeof((x[0])) )
 #define IS_DIGIT(x)     ( (x) >= '0' && (x) <= '9' )
-#define ASSERT_DIGIT(x) ( assert(IS_DIGIT((x))) )
 #define FEQUALS(a, b)   ( ((a) - (b)) < EQUALS_CUTOFF )
 
 typedef enum {
-    BEFORE_DEC,
-    AFTER_DEC,
+    START,
+    PRE_DEC,
+    POST_DEC,
     EXPONENT,
-} pmode; /* parse mode */
+    INVALID,
+    EMIT_RES,
+} state; /* parse mode */
 
 float parse_float(char *str)
 {
-    bool neg, exp_neg;
-    char prev, *ptr;
+    bool neg, exp_neg, run;
+    char *ptr;
     float res, exp, prec;
-    pmode mode;
+    state state;
 
-    /* initialize variables */
     res = exp = 0.0;
     prec = 1.0;
     neg = exp_neg = false;
-    mode = BEFORE_DEC;
-    for (ptr = str; *ptr != '\0'; ptr++) {
-        switch (mode) {
-        case BEFORE_DEC:
-            if (*ptr == '.') {
-                mode = AFTER_DEC;
-                continue;
-            }
-            if (ptr == str && *ptr == '-') {
-                neg = true;
-                continue;
-            }
-            ASSERT_DIGIT(*ptr);
-            res = res * 10.0 + (*ptr - ASCII_ZERO);
-
+    state = START;
+    ptr = str;
+    run = true;
+    while (run) {
+        switch (state) {
+        case EMIT_RES:
+            run = false;
             break;
-        case AFTER_DEC:
-            if (*ptr == 'e' || *ptr == 'E') {
-                mode = EXPONENT;
-                continue;
+        case INVALID:
+            fprintf(stderr, "parse_float(): %s is not a valid input\n", str);
+            run = false;
+            break;
+        case START:
+            if (*ptr == '-') {
+                neg = true;
+                ptr++;
             }
-            ASSERT_DIGIT(*ptr);
-            res = res * 10.0 + (*ptr - ASCII_ZERO);
-            prec *= 10.0;
-
+            state++; /* from START, we always move to next state */
+            break;
+        case PRE_DEC:
+            if (*ptr == '.') {
+                state++;
+                ptr++;
+            } else if (IS_DIGIT(*ptr)) {
+                res = res * 10.0 + (*ptr - ASCII_ZERO);
+                ptr++;
+            } else {
+                state = INVALID;
+            }
+            break;
+        case POST_DEC:
+            if (*ptr == 'e' || *ptr == 'E') {
+                state++;
+                ptr++;
+                if (*ptr == '-') {
+                    exp_neg = true;
+                    ptr++;
+                }
+            } else if (IS_DIGIT(*ptr)) {
+                res = res * 10.0 + (*ptr - ASCII_ZERO);
+                prec *= 10.0;
+                ptr++;
+            } else if (*ptr == '\0') {
+                state = EMIT_RES;
+            } else {
+                state = INVALID;
+            }
             break;
         case EXPONENT:
-            prev = *(ptr-1);
-            if ((prev == 'e' || prev == 'E') && *ptr == '-') {
-                exp_neg = true;
-                continue;
+            if (IS_DIGIT(*ptr)) {
+                exp = exp * 10.0 + (*ptr - ASCII_ZERO);
+                ptr++;
+            } else if (*ptr == '\0') {
+                state = EMIT_RES;
+            } else {
+                state = INVALID;
             }
-            ASSERT_DIGIT(*ptr);
-            exp = exp * 10.0 + (*ptr - ASCII_ZERO);
-
             break;
         default:
             exit(1); /* should never be reached */
