@@ -104,7 +104,7 @@ Since we cannot know in most states what the previous state was, we need a `STAR
             }
             break;
 ```
-`PRE_DEC` implements its specification in the most obvious way possible. See the comments for some explanations. It is absolutely possible to rewrite the entire machine with less redundancy and fewer variables. That is not the purpose of this post, though.
+`PRE_DEC` implements its specification in the state diagram in the most obvious way possible. Refer to the comments for additional explanations. It is absolutely possible to rewrite the entire machine with less redundancy and fewer variables. That is not the purpose of this post, though.
 
 ```c
         case POST_DEC:
@@ -140,7 +140,7 @@ Since we cannot know in most states what the previous state was, we need a `STAR
         }
     }
 ```
-`POST_DEC` and `EXPONENT` follow the same pattern. They try to match `*ptr` with all possible legal inputs, perform the appropriate action and if necessary, make a state transition and fetch the next input.
+`POST_DEC` and `EXPONENT` follow the same pattern. They try to match `*ptr` against all possible legal inputs, perform the appropriate action and if necessary, make a state transition and fetch the next input. If `*ptr` doesn't match any valid input, the `INVALID` state is entered.
 
 ```c
     if (neg) res *= -1;
@@ -152,7 +152,7 @@ Since we cannot know in most states what the previous state was, we need a `STAR
     return res;
 }
 ```
-Finally, we combine all variables into the final result. `res` is negated if necessary and corrected for the precision value in `prec`. Lastly, `res` is multiplied with the exponent and returned.
+After the machine has stopped, we combine all variables into the final result. `res` is negated if necessary and corrected for the precision value in `prec`. Lastly, `res` is multiplied with the exponent and returned. In the complete code listing below, we also iterate over the array of valid string representations of floats from the introduction above and assert, that the machine's result is correct.
 
 # Conclusion
 
