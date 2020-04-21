@@ -2,7 +2,7 @@
 layout: post
 title:  "Introduction to the X Window System"
 date:   2019-09-08 23:54:00 +0200
-categories: unix
+categories: linux
 ---
 
 The *X Window System* (usually abbreviated as *X11*) implements a basic set of graphics routines for bitmap displays, which enable rendering and manipulation of windows. You can think of a windowing system as the first user space API layer that enables application programmers to draw graphics to the screen[^1]. These days, *X11* is the most widely used windowing system on *GNU/Linux*. In addition to its rendering facilities, it provides an API for working with mouse and keyboard inputs.

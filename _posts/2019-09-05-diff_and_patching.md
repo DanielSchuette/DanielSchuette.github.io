@@ -2,7 +2,7 @@
 layout: post
 title:  "Generating Patches Using diff(1) And patch(1)"
 date:   2019-09-05 21:58:00 +0200
-categories: unix
+categories: linux
 ---
 
 On Unix systems, patches generated with `diff(1)` provide a convenient method to update source files without having to modify any code manually. Some open source software projects like *[suckless](https://suckless.org/)* actually rely on patching as a mechanism for adding features to programs. Also, patches can be used to easily share code between programmers during software development. In this short post, we will explore the basics of generating patches with `diff(1)` and applying patches with `patch(1)`.
