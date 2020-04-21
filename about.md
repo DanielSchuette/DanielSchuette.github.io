@@ -17,3 +17,7 @@ Click on any of the links below to learn more about me:
 If you're interested in mathematics, give this site a shot:
 
 - [World of Mathematics](https://philippschuette.github.io)
+
+A great place to learn about Python programming:
+
+- [My Python Adventures](https://corinnabuerger.github.io)
